@@ -1,4 +1,4 @@
-package edu.uoc.android.antonalag.cryptotracker
+package edu.uoc.tfm.antonalag.cryptotracker
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

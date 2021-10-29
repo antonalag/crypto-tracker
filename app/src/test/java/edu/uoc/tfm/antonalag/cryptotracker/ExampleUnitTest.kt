@@ -1,4 +1,4 @@
-package edu.uoc.android.antonalag.cryptotracker
+package edu.uoc.tfm.antonalag.cryptotracker
 
 import org.junit.Test
 

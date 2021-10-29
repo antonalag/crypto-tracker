@@ -1,4 +1,4 @@
-package edu.uoc.android.antonalag.cryptotracker
+package edu.uoc.tfm.antonalag.cryptotracker
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
