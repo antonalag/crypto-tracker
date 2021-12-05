@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".ui.userpreferences.UserPreferencesView">
+
+    <include
+        android:id="@+id/user_preferences_progress_bar"
+        layout="@layout/progress"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginVertical="20dp"
+            android:text="@string/coins"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fiat_currencies_list_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginVertical="20dp"
+            android:text="@string/time_interval"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/radiogroup_time_interval_left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <RadioButton android:id="@+id/radiobutton_ti_one_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/one_day"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onTimeIntervalRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_ti_one_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/one_month"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onTimeIntervalRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_ti_six_months"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/six_months"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onTimeIntervalRadioButtonClicked"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/radiogroup_time_interval_right"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <RadioButton android:id="@+id/radiobutton_ti_one_week"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/one_week"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onTimeIntervalRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_ti_three_months"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/three_months"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onTimeIntervalRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_ti_one_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/one_year"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onTimeIntervalRadioButtonClicked"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:layout_marginVertical="20dp"
+            android:text="@string/data_update"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/radiogroup_data_update_left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <RadioButton android:id="@+id/radiobutton_du_five_minutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/five_minutes"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_du_thirty_minutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/thirty_minutes"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_du_three_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/three_hours"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_du_nine_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/nine_hours"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/radiogroup_data_update_right"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <RadioButton android:id="@+id/radiobutton_du_fifteen_minutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/fifteen_minutes"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_du_one_hour"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/one_hour"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_du_six_hours"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/six_hours"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radiobutton_du_one_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/one_day"
+                    android:layoutDirection="ltr"
+                    android:textAlignment="textEnd"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:buttonTint="@color/secondary_accent_color"
+                    android:onClick="onDataUpdateRadioButtonClicked"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+        <LinearLayout
+            android:id="@+id/cancel_user_preferences"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:background="@drawable/cancel_button_shape"
+            android:alpha="0.85"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="12sp"
+                android:text="Cancelar"
+                android:textColor="@color/third_accent_color"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/confirm_user_preferences"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:background="@drawable/confirm_button_shape"
+            android:alpha="0.85"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="12sp"
+                android:text="Guardar"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

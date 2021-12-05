@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_margin="20dp"
+    android:layout_height="match_parent"
+    card_view:cardBackgroundColor="@color/primary_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_shape"
+        android:orientation="vertical"
+        android:radius="10dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/first_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_first"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+            <TextView
+                android:id="@+id/cv_cryptocurrency_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Bitcoin"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/first_info"
+                app:layout_constraintLeft_toLeftOf="@+id/first_info"
+                app:layout_constraintTop_toTopOf="@+id/first_info" />
+
+            <TextView
+                android:id="@+id/cv_cryptocurrency_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="BTC"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                app:layout_constraintLeft_toLeftOf="@+id/first_info"
+                app:layout_constraintTop_toBottomOf="@+id/cv_cryptocurrency_name"
+                app:layout_constraintBottom_toBottomOf="@id/first_info"/>
+
+            <ImageView
+                android:id="@+id/trash"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/ic_trash"
+                app:layout_constraintBottom_toBottomOf="@+id/first_info"
+                app:layout_constraintEnd_toEndOf="@+id/first_info"
+                app:layout_constraintLeft_toRightOf="@+id/refresh"
+                app:layout_constraintTop_toTopOf="@+id/first_info"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/ic_refresh"
+                app:layout_constraintBottom_toBottomOf="@+id/first_info"
+                app:layout_constraintRight_toLeftOf="@+id/trash"
+                app:layout_constraintTop_toTopOf="@+id/first_info"
+                app:tint="@color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20"/>
+
+        <LinearLayout
+            android:id="@+id/graph_frame"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_second"
+            app:layout_constraintTop_toBottomOf="@id/guideline_first"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/cryptocurrency_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/second_info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline_second"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/cv_cryptocurrency_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_btc"
+            app:layout_constraintBottom_toBottomOf="@+id/second_info"
+            app:layout_constraintLeft_toLeftOf="@+id/second_info"
+            app:layout_constraintTop_toTopOf="@+id/second_info"
+            android:contentDescription="TODO" />
+
+        <TextView
+            android:id="@+id/cv_cryptocurrency_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="6.180,04€"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="@+id/second_info"
+            app:layout_constraintTop_toBottomOf="@+id/cv_cryptocurrency_change_percentage"
+            app:layout_constraintBottom_toBottomOf="@+id/second_info"/>
+
+        <TextView
+            android:id="@+id/cv_cryptocurrency_change_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="1.5%"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/second_info"
+            app:layout_constraintRight_toRightOf="@+id/second_info"
+            app:layout_constraintTop_toTopOf="@+id/second_info" />
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="TODO"
+            android:rotation="-90"
+            android:src="@drawable/ic_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/second_info"
+            app:layout_constraintRight_toLeftOf="@+id/cv_cryptocurrency_change_percentage"
+            app:layout_constraintTop_toTopOf="@+id/second_info"
+            app:tint="@color/detail_chart_line_color" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

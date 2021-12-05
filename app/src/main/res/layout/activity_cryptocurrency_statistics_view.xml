@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color"
+    android:orientation="vertical"
+    tools:context=".ui.cryptocurrency.CryptocurrencyStatisticsView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/cryptocurrency_principal_data_progress_bar"
+            layout="@layout/progress"/>
+
+        <include
+            android:id="@+id/cryptocurrency_principal_data_error"
+            layout="@layout/error"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/background_shape">
+
+                <ImageView
+                    android:id="@+id/investment_iv_cryptocurrency_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="20dp"
+                    android:alpha="0.85"
+                    android:src="@drawable/ic_btc" />
+
+                <TextView
+                    android:id="@+id/investment_iv_cryptocurrency_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_toRightOf="@id/investment_iv_cryptocurrency_icon"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Bitcoin"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/investment_iv_cryptocurrency_symbol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/investment_iv_cryptocurrency_name"
+                    android:layout_toRightOf="@id/investment_iv_cryptocurrency_icon"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="BTC"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/cryptocurrency_arrow"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="27dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/cryptocurrency_price"
+                    android:rotation="-90"
+                    android:src="@drawable/ic_arrow"
+                    app:tint="@color/detail_chart_line_color" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="22.150,00€"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_change_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_price"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:text="+1.5%"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.5">
+
+        <LinearLayout
+            android:id="@+id/one_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_transparent_shape"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:text="24h"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/one_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_transparent_shape"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:text="1w"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/one_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_shape"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:text="1m"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/three_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_transparent_shape"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:text="3m"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/six_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_transparent_shape"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:text="6m"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/one_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/background_transparent_shape"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:text="1y"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+        <include
+            android:id="@+id/cryptocurrency_chart_progress_bar"
+            layout="@layout/progress"/>
+
+        <include
+            android:id="@+id/cryptocurrency_chart_error"
+            layout="@layout/error"/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/cryptocurrency_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/investment_iv_cryptocurrency_symbol"
+            android:layout_above="@+id/investment_iv_cryptocurrency_icon"
+            android:layout_margin="20dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1.5"
+        android:background="@drawable/background_shape">
+
+        <include
+            android:id="@+id/cryptocurrency_secondary_data_progress_bar"
+            layout="@layout/progress"/>
+
+        <include
+            android:id="@+id/cryptocurrency_secondary_data_error"
+            layout="@layout/error"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cryptocurrency_ranking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Ranking"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_ranking_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_btc_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_ranking"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Precio en BTC"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_btc_price_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_ranking_value"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_btc_price"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Precio en BTC"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_volume_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_btc_price_value"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="4514555849.85"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/cryptocurrency_available_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Acciones disponibles"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_available_supply_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="17373875"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_total_supply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_available_supply"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Acciones totales"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_total_suply_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_available_supply_value"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="17373875"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_market_cap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_total_supply"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Capitalización"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:id="@+id/cryptocurrency_market_cap_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cryptocurrency_total_suply_value"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="110545616313"
+                    android:textColor="@color/white"
+                    android:textSize="8sp" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/background_shape">
+
+            <include
+                android:id="@+id/investment_data_progress_bar"
+                layout="@layout/progress"/>
+
+            <include
+                android:id="@+id/investment_data_error"
+                layout="@layout/error"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/investment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Inversión"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Cantidad"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/investment"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/investment_quantity_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="0,5"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/investment"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"/>
+
+                <TextView
+                    android:id="@+id/value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Valor"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/quantity"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:id="@+id/investment_value_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="22.150,00€"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/investment_quantity_value"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"/>
+
+                <ImageView
+                    android:id="@+id/investment_arrow"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="27dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toLeftOf="@+id/investment_value_value"
+                    android:layout_alignParentBottom="true"
+                    android:rotation="-90"
+                    android:src="@drawable/ic_arrow"
+                    app:tint="@color/detail_chart_line_color" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/background_shape">
+
+            <include
+                android:id="@+id/cryptocurrency_links_progress_bar"
+                layout="@layout/progress"/>
+
+            <include
+                android:id="@+id/cryptocurrency_links_error"
+                layout="@layout/error"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/links"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.85"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Enlaces"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"/>
+
+                <ImageView
+                    android:id="@+id/web_link"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_globe"
+                    android:layout_below="@+id/links"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    app:tint="@color/third_accent_color" />
+
+                <ImageView
+                    android:id="@+id/reddit_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_reddit"
+                    android:layout_below="@+id/links"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/web_link"
+                    app:tint="@color/third_accent_color" />
+
+                <ImageView
+                    android:id="@+id/twitter_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_twitter"
+                    android:layout_below="@+id/links"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_toRightOf="@+id/reddit_link"
+                    app:tint="@color/third_accent_color" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+

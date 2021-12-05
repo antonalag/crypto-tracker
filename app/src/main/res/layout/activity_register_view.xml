@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".ui.register.RegisterView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.85"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Bienvenido a"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cocobike_regular_trial"
+            android:text="CRYPTO TRACKER"
+            android:textColor="@color/primary_accent_color"
+            android:textSize="24sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/background_shape"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/register_progress_bar"
+            layout="@layout/progress"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.85"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="¡Únete a nosotros!"
+            android:textColor="@color/white"
+            android:layout_margin="20dp"
+            android:textSize="20sp"/>
+
+        <RelativeLayout
+            android:id="@+id/google_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/google_bar_shape"
+            android:layout_marginHorizontal="20dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_google_bar"
+                android:layout_marginLeft="20dp"
+                android:layout_marginVertical="10dp"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:text="Continuar con Google"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/facebook_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/facebook_bar_shape"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_facebook_bar"
+                android:layout_marginLeft="20dp"
+                android:layout_marginVertical="10dp"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:text="Continuar con Facebook"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/twitter_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/twitter_bar_shape"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_twitter_bar"
+                android:layout_marginLeft="20dp"
+                android:layout_marginVertical="10dp"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:text="Continuar con Twitter"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp"
+                android:layout_margin="20dp"
+                android:alpha="0.85"
+                android:background="@color/white" />
+
+            <ImageView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="1dp"
+                android:paddingTop="1dp"
+                android:layout_margin="20dp"
+                android:alpha="0.85"
+                android:background="@color/white" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/white"
+            android:hint="Nombre"
+            android:alpha="0.85"
+            android:textSize="14sp"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/secondary_accent_color"/>
+
+        <EditText
+            android:id="@+id/surname_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/white"
+            android:hint="Apellidos"
+            android:alpha="0.85"
+            android:textSize="14sp"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/secondary_accent_color"/>
+
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/white"
+            android:hint="Email"
+            android:alpha="0.85"
+            android:textSize="14sp"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/secondary_accent_color"/>
+
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/white"
+            android:hint="Contraseña"
+            android:alpha="0.85"
+            android:textSize="14sp"
+            android:textColorHint="@color/white"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/secondary_accent_color"/>
+
+        <EditText
+            android:id="@+id/repeat_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/white"
+            android:hint="Repetir Contraseña"
+            android:alpha="0.85"
+            android:textSize="14sp"
+            android:textColorHint="@color/white"
+            android:inputType="textPassword"
+            android:backgroundTint="@color/secondary_accent_color"/>
+
+        <RelativeLayout
+            android:id="@+id/sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/confirm_button_shape"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:text="Crear cuenta"
+            android:layout_margin="10dp"
+            android:layout_centerInParent="true"
+            />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="¿Eres miembro?"
+                android:textColor="@color/white"
+                android:alpha="0.85"
+                android:gravity="right"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="12dp"
+                />
+
+            <TextView
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/sign_in"
+                android:textColor="@color/twitter_color"
+                android:layout_marginLeft="5dp"
+                android:alpha="0.85"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="12dp"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

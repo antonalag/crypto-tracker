@@ -9,4 +9,61 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_home_view">HomeView</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+
+
+    <!-- Crypto Tracker's strings -->
+    <string name="sign_in"><u>Iniciar sesión</u></string>
+    <string name="sign_up"><u>Crear cuenta</u></string>
+    <string name="incorrect_login_inputs">Debe rellenar los campos de email y contraseña</string>
+    <string name="incorrect_user">Usuario incorrecto</string>
+    <string name="incorrect_password">Contraseña incorrecta</string>
+    <string name="user_not_found">Usuario no encontrado</string>
+    <string name="something_wrong">Oh no! Algo ha ido mal...</string>
+    <string name="all_fields_are_mandatory">Debe rellenar todos los campos</string>
+    <string name="different_passwords">Las contraseñas no son iguales</string>
+    <string name="user_already_exists">Ya existe un usuario con este email</string>
+    <string name="news">Noticias</string>
+    <string name="news_detail">Noticia</string>
+    <string name="saved_news">La noticia se ha guardado correctamente</string>
+    <string name="news_already_exists">La noticia que intenta guardar ya ha sido almacenada previamente</string>
+    <string name="filters">Filtros</string>
+    <string name="sort">Ordenación</string>
+    <string name="rising_filters">Destacados</string>
+    <string name="hot_filters">Populares</string>
+    <string name="important_filters">Importantes</string>
+    <string name="lol_filters">Desternillantes</string>
+    <string name="dialog_news_fragment_error">Debe selecciona una criptomoneda y un valor de ordenación</string>
+    <string name="converter">Conversor</string>
+    <string name="statistics">Estadísticas</string>
+    <string name="my_account">Mi cuenta</string>
+    <string name="confirm_delete_account_message">¿Está seguro de eliminar su cuenta?</string>
+    <string name="coins">Monedas</string>
+    <string name="time_interval">Intervalo de tiempo en gráficas</string>
+    <string name="data_update">Actualización de datos</string>
+    <string name="one_day">1 día</string>
+    <string name="one_week">1 semana</string>
+    <string name="one_month">1 mes</string>
+    <string name="three_months">3 meses</string>
+    <string name="six_months">6 meses</string>
+    <string name="one_year">1 año</string>
+    <string name="five_minutes">5 minutos</string>
+    <string name="fifteen_minutes">15 minutos</string>
+    <string name="thirty_minutes">30 minutos</string>
+    <string name="one_hour">1 hora</string>
+    <string name="three_hours">3 horas</string>
+    <string name="six_hours">6 horas</string>
+    <string name="nine_hours">9 horas</string>
+    <string name="saved_news_title">Noticias guardadas</string>
+    <string name="delete_investment_error">No se ha podido borrar la inversión seleccionada</string>
+    <string name="edit_investment_error">No se ha podido modificar la inversión seleccionada</string>
+    <string name="edit_investment_purchase_validation">Debe añadir un valor de inversión</string>
+    <string name="server_error">Error al obtener datos de una API externa</string>
+    <string name="local_error">Error al obtener datos almacenados localmente</string>
+    <string name="unknown_error">Error desconocido</string>
 </resources>

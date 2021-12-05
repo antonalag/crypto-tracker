@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:background="@drawable/background_dialog_shape"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/saving_investment_progress_bar"
+        layout="@layout/progress"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Criptomonedas"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="30dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/invest_cryptocurrency_list_recyclerView_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                app:layout_constraintBottom_toBottomOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintEnd_toEndOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintTop_toTopOf="@+id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintStart_toStartOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                android:id="@+id/invest_cryptocurency_progress_bar"
+                layout="@layout/progress"/>
+
+            <include
+                app:layout_constraintBottom_toBottomOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintEnd_toEndOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintTop_toTopOf="@+id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintStart_toStartOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                android:id="@+id/invest_cryptocurrencies_error"
+                layout="@layout/error"/>
+
+            <include
+                app:layout_constraintBottom_toBottomOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintEnd_toEndOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintTop_toTopOf="@+id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintStart_toStartOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                android:id="@+id/invest_empty_cryptocurrencies"
+                layout="@layout/empty" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/invest_cryptocurrency_list_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toBottomOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintEnd_toEndOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintTop_toTopOf="@+id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintStart_toStartOf="@id/invest_cryptocurrency_list_recyclerView_container"
+                app:layout_constraintHeight_max="150dp"
+                android:layout_margin="20dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Valor adquirido"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="30dp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/purchased_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:singleLine="true"
+                android:inputType="number"
+                android:layout_margin="20dp"
+                android:hint="Valor adquirido"
+                android:textColorHint="@color/secondary_accent_color"
+                android:backgroundTint="@color/secondary_accent_color"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/invest_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:background="@drawable/cancel_button_shape"
+                android:alpha="0.85">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="12sp"
+                    android:text="Cancelar"
+                    android:textColor="@color/third_accent_color"
+                    android:gravity="center"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/invest_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:background="@drawable/confirm_button_shape"
+                android:alpha="0.85">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="12sp"
+                    android:text="Añadir"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_margin="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867492373988",
+    "project_id": "crypto-tracker-3a632",
+    "storage_bucket": "crypto-tracker-3a632.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867492373988:android:46ab0defd5181d6c5013f1",
+        "android_client_info": {
+          "package_name": "edu.uoc.android.antonalag.cryptotracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867492373988-tq0cns34j9f9mnsf7r0bvlut874mqvc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDsJA7bqdvaP3a3HBi5xv20QLm8UP4KNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867492373988-tq0cns34j9f9mnsf7r0bvlut874mqvc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

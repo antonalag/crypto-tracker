@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="primary_color">#242936</color>
+    <color name="secondary_color">#2C313F</color>
+    <color name="on_primary_color">#4C5160</color>
+    <color name="primary_accent_color">#FF7272</color>
+    <color name="secondary_accent_color">#FFBC8C</color>
+    <color name="third_accent_color">#85D9E9</color>
+    <color name="delete_color">#CF6679</color>
+    <color name="detail_chart_background_color">#011A00</color>
+    <color name="detail_chart_guidelines_color">#385033</color>
+    <color name="detail_chart_line_color">#00FF0A</color>
+    <color name="google_color">#DB4437</color>
+    <color name="facebook_color">#4267B2</color>
+    <color name="twitter_color">#1DA1F2</color>
+    <color name="dialog_color">#555A6A</color>
+    <color name="dialog_item_selected_color">#2c313f</color>
 </resources>
