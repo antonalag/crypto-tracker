@@ -1,18 +1,3 @@
-/**
- * Copyright (C) 2020 Fernando Cejas Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package edu.uoc.tfm.antonalag.cryptotracker.core.platform
 
 import androidx.lifecycle.LifecycleOwner
@@ -20,8 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
 
+/**
+ * LifecycleOwner is a single method interface that indicates that a class has a Lifecycle.
+ * Lifecycle defines objects that have a life cycle in Android along with their state and event information.
+ * For more information please visit: https://developer.android.com/topic/libraries/architecture/lifecycle
+ */
+
+/**
+ * Allows a viewmodel to handle a LiveData object an apply a function when the live data finished correctly.
+ */
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T) -> Unit) =
     liveData.observe(this, Observer(body))
 
+/**
+ * Allows a viewmodel to handle a LiveData object an apply a function when the live data finished incorrectly.
+ */
 fun <L : LiveData<Fail>> LifecycleOwner.fail(liveData: L, body: (Fail) -> Unit) =
     liveData.observe(this, Observer(body))

@@ -11,6 +11,9 @@ import kotlinx.android.synthetic.main.dialog_confirm_delete_account.view.*
 import java.lang.ClassCastException
 import java.lang.IllegalStateException
 
+/**
+ * Fragment that shows delete account dialog
+ */
 class DeleteUserAccountDialogFragment: DialogFragment() {
 
     private lateinit var listener: DeleteUserAccountDialogListener
@@ -46,7 +49,9 @@ class DeleteUserAccountDialogFragment: DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the DeleteUserAccountDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the DeleteUserAccountDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface

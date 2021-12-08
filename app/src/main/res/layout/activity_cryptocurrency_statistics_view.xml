@@ -53,7 +53,6 @@
                     android:layout_toRightOf="@id/investment_iv_cryptocurrency_icon"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Bitcoin"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -65,7 +64,6 @@
                     android:layout_toRightOf="@id/investment_iv_cryptocurrency_icon"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="BTC"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -89,7 +87,6 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="22.150,00€"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -101,7 +98,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
-                    android:text="+1.5%"
                     android:textColor="@color/white" />
 
             </RelativeLayout>
@@ -131,7 +127,7 @@
                 android:layout_margin="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="24h"
+                android:text="@string/one_day_button"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -151,7 +147,7 @@
                 android:layout_margin="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="1w"
+                android:text="@string/one_week_button"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -171,7 +167,7 @@
                 android:layout_margin="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="1m"
+                android:text="@string/one_month_button"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -191,7 +187,7 @@
                 android:layout_margin="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="3m"
+                android:text="@string/three_months_button"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -211,7 +207,7 @@
                 android:layout_margin="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="6m"
+                android:text="@string/six_months_button"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -231,7 +227,7 @@
                 android:layout_margin="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="1y"
+                android:text="@string/one_year_button"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
@@ -299,7 +295,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Ranking"
+                    android:text="@string/ranking"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -313,7 +309,6 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="1"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -326,7 +321,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Precio en BTC"
+                    android:text="@string/btc_price"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -340,7 +335,6 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="1"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -353,7 +347,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Precio en BTC"
+                    android:text="@string/volume"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -367,10 +361,8 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="4514555849.85"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
-
 
             </RelativeLayout>
 
@@ -394,7 +386,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Acciones disponibles"
+                    android:text="@string/available_supply"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -408,7 +400,6 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="17373875"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -421,7 +412,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Acciones totales"
+                    android:text="@string/total_supply"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -435,7 +426,6 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="17373875"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -448,7 +438,7 @@
                     android:layout_marginTop="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Capitalización"
+                    android:text="@string/market_cap"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
 
@@ -462,10 +452,8 @@
                     android:layout_marginRight="20dp"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="110545616313"
                     android:textColor="@color/white"
                     android:textSize="8sp" />
-
 
             </RelativeLayout>
 
@@ -495,6 +483,10 @@
                 android:id="@+id/investment_data_error"
                 layout="@layout/error"/>
 
+            <include
+                android:id="@+id/investment_data_empty"
+                layout="@layout/empty"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -505,7 +497,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.85"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Inversión"
+                    android:text="@string/investment"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:layout_alignParentStart="true"
@@ -519,7 +511,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Cantidad"
+                    android:text="@string/quantity"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:layout_alignParentStart="true"
@@ -533,7 +525,6 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="0,5"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:layout_alignParentEnd="true"
@@ -547,7 +538,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Valor"
+                    android:text="@string/value"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:layout_alignParentStart="true"
@@ -562,7 +553,6 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.85"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="22.150,00€"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:layout_alignParentEnd="true"
@@ -613,7 +603,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.85"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Enlaces"
+                    android:text="@string/links"
                     android:textColor="@color/white"
                     android:textSize="10sp"
                     android:layout_alignParentStart="true"
@@ -655,7 +645,6 @@
                     app:tint="@color/third_accent_color" />
 
             </RelativeLayout>
-
 
         </LinearLayout>
 

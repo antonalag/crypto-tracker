@@ -18,14 +18,10 @@ class NewsService(
     private val newsConverter: NewsConverter
 ) : BaseService() {
 
-    private val TAG = "NewsService"
-
     suspend fun getNews(
         filters: Map<String, String>,
         next: String?
     ): Either<Fail, NewsListViewDto> {
-
-
         return next?.let { nextUrl ->
             requestGET<NewsResponse, NewsListViewDto>(
                 httpClient,
@@ -35,26 +31,9 @@ class NewsService(
         } ?: requestGET<NewsResponse, NewsListViewDto>(
             httpClient,
             Endpoints.newsUrl,
-            mutableMapOf(APIConstants.NEWS_AUTH_TOKEN_PARAM to APIConstants.NEWS_API_AUTH_TOKEN).plus(filters)
+            mutableMapOf(APIConstants.NEWS_AUTH_TOKEN_PARAM to APIConstants.NEWS_API_AUTH_TOKEN).plus(
+                filters
+            )
         ) { newsConverter.fromNewsResponseToNewsListViewDto(it) }
     }
-
-    /*suspend fun getNews(filters:Map<String, String>?, next: String?): NewsResponse? {
-        return try {
-            if(next != null){
-                httpClient.get<NewsResponse>(next)
-            } else {
-                httpClient.get<NewsResponse>(Endpoints.newsUrl) {
-                    parameter(APIConstants.NEWS_AUTH_TOKEN_PARAM, APIConstants.NEWS_API_AUTH_TOKEN)
-                    filters?.let {
-                        it.forEach{ (k, v) -> parameter(k, v)}
-                    }
-                }
-            }
-        } catch(t: Throwable){
-            Log.w(TAG, "error getting news", t)
-            null;
-        }
-
-    }*/
 }

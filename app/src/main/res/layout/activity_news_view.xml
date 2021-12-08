@@ -103,6 +103,10 @@
             android:id="@+id/news_error"
             layout="@layout/error"/>
 
+        <include
+            android:id="@+id/news_empty"
+            layout="@layout/empty" />
+
         <androidx.recyclerview.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/news_list_recyclerView"

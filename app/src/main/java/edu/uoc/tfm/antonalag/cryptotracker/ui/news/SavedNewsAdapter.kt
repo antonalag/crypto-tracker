@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import edu.uoc.tfm.antonalag.cryptotracker.R
 import edu.uoc.tfm.antonalag.cryptotracker.features.news.model.LocalNews
-import edu.uoc.tfm.antonalag.cryptotracker.features.news.model.NewsListViewResultDto
 import kotlinx.android.synthetic.main.saved_news_list_item_swipe_view.view.*
 import java.lang.ClassCastException
 
@@ -20,7 +18,7 @@ class SavedNewsAdapter(private val context: Context): ListAdapter<LocalNews, Sav
     SavedNewsDiffCallback
 ) {
 
-    private lateinit var listener: DeleteClickListener
+    private lateinit var listener: SavedNewsApadterClickListener
     private val viewBinderHelper = ViewBinderHelper()
 
     /**
@@ -28,8 +26,9 @@ class SavedNewsAdapter(private val context: Context): ListAdapter<LocalNews, Sav
      * implement this interface in order to receive event callbacks. Each
      * method passes the id of the element selected
      */
-    interface DeleteClickListener{
+    interface SavedNewsApadterClickListener{
         fun onDeleteClickListener(localNewsId: Long)
+        fun onClickListener(localNewsUrl: String, localNewsTitle: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedNewsViewHolder {
@@ -39,6 +38,7 @@ class SavedNewsAdapter(private val context: Context): ListAdapter<LocalNews, Sav
     }
 
     override fun onBindViewHolder(holder: SavedNewsViewHolder, position: Int) {
+        // Set swipe properties
         viewBinderHelper.setOpenOnlyOne(true)
         viewBinderHelper.bind(holder.itemView.saved_news_list_item_swipe, getItem(position).id.toString())
         viewBinderHelper.closeLayout(getItem(position).id.toString())
@@ -53,24 +53,22 @@ class SavedNewsAdapter(private val context: Context): ListAdapter<LocalNews, Sav
             itemView.delete_saved_news.setOnClickListener {
                 listener.onDeleteClickListener(localNews.id)
             }
-            itemView.setOnClickListener {
-                val intent = Intent(it.context, NewsDetailView::class.java).apply {
-                    putExtra("url", localNews.url)
-                    putExtra("title", localNews.title)
-                }
-                it.context.startActivity(intent)
+            itemView.saved_news_detail.setOnClickListener {
+                listener.onClickListener(localNews.url, localNews.title)
             }
 
         }
     }
 
-    // Override onAattach method to instantiate DeleteCLickListener
+    /**
+     * Override onAattach method to instantiate DeleteCLickListener
+     */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         // Verify that the host acitivity implements the callback interface
         try {
             // Instantiate the DeleteCLickListener to be able to send events to the host
-            listener = context as DeleteClickListener
+            listener = context as SavedNewsApadterClickListener
         } catch( e: ClassCastException ) {
             throw ClassCastException("$context must implement DeleteCLickListener")
         }

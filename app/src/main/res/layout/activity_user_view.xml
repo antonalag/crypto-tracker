@@ -139,7 +139,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:textColor="@color/white"
-                android:text="Nombre"/>
+                android:text="@string/nombre"/>
 
             <EditText
                 android:id="@+id/name_edit_text"
@@ -171,7 +171,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/white"
-                android:text="Apellidos"/>
+                android:text="@string/apellidos"/>
 
             <EditText
                 android:id="@+id/surname_edit_text"
@@ -203,7 +203,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/white"
-                android:text="correo@gmail.com"/>
+                android:text="@string/correo_gmail_com"/>
 
             <EditText
                 android:id="@+id/email_edit_text"
@@ -279,7 +279,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Cerrar sesión"
+                    android:text="@string/cerrar_sesion"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -303,7 +303,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Eliminar cuenta"
+                    android:text="@string/eliminar_cuenta"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -328,7 +328,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Aceptar"
+                    android:text="@string/aceptar"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -353,7 +353,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Cancelar"
+                    android:text="@string/cancelar"
                     android:textColor="@color/third_accent_color"
                     android:textSize="12sp" />
 

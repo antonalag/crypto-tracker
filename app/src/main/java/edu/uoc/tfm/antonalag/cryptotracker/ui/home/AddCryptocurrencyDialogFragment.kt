@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -26,7 +27,12 @@ import java.lang.ClassCastException
 import java.lang.IllegalStateException
 import kotlin.properties.Delegates
 
+/**
+ * Fragment that shows cryptocurrency dialog
+ */
 class AddCryptocurrencyDialogFragment : DialogFragment() {
+
+    private val TAG = "AddCryptocurrencyDialogFragment"
 
     private val viewModel by sharedViewModel<HomeViewModel>()
     private val dialogCryptocurrencyAdapter = DialogCryptocurrencyAdapter()
@@ -37,6 +43,9 @@ class AddCryptocurrencyDialogFragment : DialogFragment() {
     lateinit var savedCryptocurrencies: List<LocalCryptocurrency>
     private val userPreferences: UserPreferences = CryptoTrackerApp.instance.userPreferences
 
+    /**
+     * Set necessary data
+     */
     private fun setSavedCryptocurrencies() {
         savedCryptocurrencies =
             arguments?.getSerializable("data") as List<LocalCryptocurrency>
@@ -77,7 +86,11 @@ class AddCryptocurrencyDialogFragment : DialogFragment() {
 
                 override fun loadMoreItems() {
                     this@AddCryptocurrencyDialogFragment.isLoading = true
-                    viewModel.getCryptocurrencytListViewDtoList(userPreferences.fiat, layoutManager.itemCount, 10)
+                    viewModel.getCryptocurrencytListViewDtoList(
+                        userPreferences.fiat,
+                        layoutManager.itemCount,
+                        10
+                    )
                 }
 
                 override val isLastPage: Boolean
@@ -88,13 +101,13 @@ class AddCryptocurrencyDialogFragment : DialogFragment() {
 
             })
 
+            // Set on click listeners
             dialogView.cancel.setOnClickListener {
                 listener.onAddCryptocurrencyDialogCancelClick(this)
             }
-
             dialogView.confirm.setOnClickListener {
-                if(validate()) {
-                    dialogView.saving_cryptocurency_progress_bar.visibility = View.VISIBLE
+                if (validate()) {
+                    showSavingLoading(true)
                     viewModel.saveCryptocurrencies(dialogCryptocurrencyAdapter.selectedCryptocurrencies)
                 } else {
                     showInvalidateRequest()
@@ -108,7 +121,9 @@ class AddCryptocurrencyDialogFragment : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the CryptocurrencyDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the CryptocurrencyDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface
@@ -121,11 +136,17 @@ class AddCryptocurrencyDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
         isLoading = true
         viewModel.getCryptocurrencytListViewDtoList(userPreferences.fiat, 0, 10)
     }
 
+    /**
+     * Configure the HomeViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(cryptocurrencyListViewDtoList, ::renderCryptocurrencies)
@@ -138,43 +159,94 @@ class AddCryptocurrencyDialogFragment : DialogFragment() {
         }
     }
 
-    private fun callConfirmListener(list: List<Long>){
+    /**
+     * It's called when the request for save cryptocurrency is successful
+     */
+    private fun callConfirmListener(list: List<Long>) {
         // Send the confirm button event back to the host activity
         listener.onAddCryptocurrencyDialogConfirmClick(this)
     }
 
+    /**
+     * It's called when the request for cryptocurrencies information is successful
+     */
     private fun renderCryptocurrencies(list: List<CryptocurrencyListViewDto>) {
         if (list.isEmpty()) {
-            dialogView.cryptocurency_progress_bar.visibility = View.GONE
-            dialogView.empty_cryptocurrencies.visibility = View.VISIBLE
+            Log.v(TAG, resources.getString(R.string.cryptocurrency_request_not_found))
+            showLoading(false)
+            showEmpty(true)
         } else {
+            Log.v(TAG, resources.getString(R.string.cryptocurrency_request_successful))
             dialogCryptocurrencyAdapter.submitList(dialogCryptocurrencyAdapter.currentList.plus(list))
-            dialogView.cryptocurency_progress_bar.visibility = View.GONE
+            showLoading(false)
         }
         isLoading = false
     }
 
+    /**
+     * It's called when the requests has failed
+     */
     private fun handleFail(fail: Fail) {
+        Log.v(TAG, resources.getString(R.string.cryptocurrency_request_failed))
         when (fail) {
             is Fail.ServerFail -> {
-                dialogView.cryptocurency_progress_bar.visibility = View.GONE
-                dialogView.saving_cryptocurency_progress_bar.visibility = View.GONE
-                dialogView.cryptocurrencies_error.visibility = View.VISIBLE
+                Log.e(TAG, resources.getString(R.string.server_error))
+                showLoading(false)
+                showSavingLoading(false)
+                showError(true)
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showLoading(false)
+                showSavingLoading(false)
+                showError(true)
             }
         }
     }
 
+    /**
+     * Show loading
+     */
+    private fun showLoading(show: Boolean) {
+        dialogView.cryptocurency_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show saving loading
+     */
+    private fun showSavingLoading(show: Boolean) {
+        dialogView.saving_cryptocurency_progress_bar.visibility =
+            if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show error
+     */
+    private fun showError(show: Boolean) {
+        dialogView.cryptocurrencies_error.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show empty
+     */
+    private fun showEmpty(show: Boolean) {
+        dialogView.empty_cryptocurrencies.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Validate user selection
+     */
     private fun validate(): Boolean {
         // Check if user select any elements of the list
         return dialogCryptocurrencyAdapter.selectedCryptocurrencies.isNotEmpty()
     }
 
+    /**
+     * A message is displayed to the user informing him/her to select a cryptocurrency.
+     */
     private fun showInvalidateRequest() {
-        val toast = Toast.makeText(context, "No se ha seleccionado ningún elemento", Toast.LENGTH_LONG)
-        toast.show()
+        Toast.makeText(context, resources.getString(R.string.item_no_selected), Toast.LENGTH_LONG)
+            .show()
     }
 
     companion object {

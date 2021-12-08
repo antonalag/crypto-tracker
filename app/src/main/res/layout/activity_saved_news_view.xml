@@ -23,6 +23,10 @@
             android:id="@+id/saved_news_error"
             layout="@layout/error"/>
 
+        <include
+            android:id="@+id/saved_news_empty"
+            layout="@layout/empty" />
+
         <androidx.recyclerview.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/saved_news_list_recyclerView"

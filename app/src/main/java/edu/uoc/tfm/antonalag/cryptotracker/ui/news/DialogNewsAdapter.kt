@@ -46,6 +46,8 @@ class DialogNewsAdapter() :
                     .load(localCryptocurrency.icon)
                     .centerCrop()
                     .into(itemView.cryptocurrency_icon)
+            } else {
+                itemView.cryptocurrency_icon.visibility = View.INVISIBLE
             }
 
             itemView.setOnClickListener {

@@ -1,5 +1,6 @@
 package edu.uoc.tfm.antonalag.cryptotracker.features.user.repository
 
+import android.util.Log
 import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.Either
 import edu.uoc.tfm.antonalag.cryptotracker.features.user.datasource.SessionManager
@@ -11,13 +12,16 @@ import edu.uoc.tfm.antonalag.cryptotracker.features.user.model.UserPreferences
 class UserRepositoryImpl(
     private val sessionManager: SessionManager,
     private val userDao: UserDao
-): UserRepository {
+) : UserRepository {
+
+    private val TAG = "UserRepositoryImpl"
 
     override suspend fun isUserAvailable(): Either<Fail, Boolean> {
         return try {
             val response = sessionManager.isUserAvailable()
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -26,7 +30,8 @@ class UserRepositoryImpl(
         return try {
             val response = sessionManager.getAccessToken()
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -35,7 +40,8 @@ class UserRepositoryImpl(
         return try {
             sessionManager.saveAccessToken(userId)
             Either.Right(true)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -44,7 +50,8 @@ class UserRepositoryImpl(
         return try {
             sessionManager.clearAccessToken()
             Either.Right(true)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -53,7 +60,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.findUserById(id)
             response?.let { Either.Right(it) } ?: Either.Left(Fail.NotFoundFail)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -62,7 +70,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.findUserByEmail(email)
             response?.let { Either.Right(it) } ?: Either.Left(Fail.NotFoundFail)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -71,7 +80,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.findPreferencesByUserId(userId)
             response?.let { Either.Right(it) } ?: Either.Left(Fail.NotFoundFail)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -80,7 +90,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.findPreferencesById(id)
             response?.let { Either.Right(it) } ?: Either.Left(Fail.NotFoundFail)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -89,7 +100,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.findPasswordByUserId(userId)
             response?.let { Either.Right(it) } ?: Either.Left(Fail.NotFoundFail)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -98,7 +110,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.findPasswordById(id)
             response?.let { Either.Right(it) } ?: Either.Left(Fail.NotFoundFail)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -107,7 +120,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.userExistsByEmail(email)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -116,7 +130,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.saveUser(user)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -125,7 +140,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.updateUser(user)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -134,7 +150,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.savePreferences(preferences)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -143,7 +160,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.updatePreferences(preferences)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -152,7 +170,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.savePassword(password)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -161,7 +180,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.updatePassword(password)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -170,7 +190,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.deleteUser(id)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -179,7 +200,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.deletePreferences(id)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -188,7 +210,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.deletePreferencesByUserId(userId)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -197,7 +220,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.deletePassword(id)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -206,7 +230,8 @@ class UserRepositoryImpl(
         return try {
             val response = userDao.deletePasswordByUserId(userId)
             Either.Right(response)
-        } catch(exception: Throwable) {
+        } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }

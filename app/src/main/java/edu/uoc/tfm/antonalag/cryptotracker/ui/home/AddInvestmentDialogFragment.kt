@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
@@ -22,7 +23,12 @@ import java.io.Serializable
 import java.lang.ClassCastException
 import java.lang.IllegalStateException
 
-class AddInvestmentDialogFragment: DialogFragment() {
+/**
+ * Fragment that shows investment dialog
+ */
+class AddInvestmentDialogFragment : DialogFragment() {
+
+    private val TAG = "AddInvestmentDialogFragment"
 
     private val viewModel by sharedViewModel<HomeViewModel>()
     private val dialogInvestmentAdapter = DialogInvestmentAdapter()
@@ -31,6 +37,9 @@ class AddInvestmentDialogFragment: DialogFragment() {
     private lateinit var listener: InvestmentDialogListener
     lateinit var localCryptocurrencies: List<LocalCryptocurrency>
 
+    /**
+     * Set necessary data
+     */
     private fun setLocalCryptocurrencies() {
         localCryptocurrencies = arguments?.getSerializable("data") as List<LocalCryptocurrency>
     }
@@ -56,19 +65,23 @@ class AddInvestmentDialogFragment: DialogFragment() {
             // Pass null as the parent view because its going in the dialog layout
             dialogView = inflater.inflate(R.layout.dialog_investment, null)
             builder.setView(dialogView)
+            // Initialize recycler view
             layoutManager = LinearLayoutManager(activity)
             dialogView.invest_cryptocurrency_list_recyclerView.layoutManager = layoutManager
             dialogView.invest_cryptocurrency_list_recyclerView.adapter = dialogInvestmentAdapter
 
+            // Se on click listeners
             dialogView.invest_cancel.setOnClickListener {
                 listener.onAddInvestmentDialogCancelClick(this)
             }
-
             dialogView.invest_confirm.setOnClickListener {
-                if(validate()) {
+                if (validate()) {
                     dialogView.saving_investment_progress_bar.visibility = View.VISIBLE
                     val totalInvested = dialogView.purchased_value.text.toString().toDouble()
-                    val investment = Investment(totalInvested, dialogInvestmentAdapter.selectedCryptocurrency!!.id)
+                    val investment = Investment(
+                        totalInvested,
+                        dialogInvestmentAdapter.selectedCryptocurrency!!.id
+                    )
                     viewModel.saveInvestment(investment)
                 } else {
                     showInvalidateRequest()
@@ -82,11 +95,14 @@ class AddInvestmentDialogFragment: DialogFragment() {
 
             initRequests()
 
+            // Create
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the InvestmentDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the InvestmentDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface
@@ -99,11 +115,17 @@ class AddInvestmentDialogFragment: DialogFragment() {
         }
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
         dialogInvestmentAdapter.submitList(localCryptocurrencies)
         dialogView.invest_cryptocurency_progress_bar.visibility = View.GONE
     }
 
+    /**
+     * Configure the ExchangeViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(saveInvestment, ::callConfirmListener)
@@ -111,30 +133,72 @@ class AddInvestmentDialogFragment: DialogFragment() {
         }
     }
 
+    /**
+     * It's called when the request for save investment is successful
+     */
     private fun callConfirmListener(investmentId: Long) {
         // Send the confirm button event back to the host activity
         listener.onAddInvestmentDialogConfirmClick(this)
     }
 
+    /**
+     * It's called when the request cryptocurrencies information has failed
+     */
     private fun handleFail(fail: Fail) {
-        when(fail) {
+        Log.v(TAG, resources.getString(R.string.investment_request_failed))
+        when (fail) {
             is Fail.LocalFail -> {
-                dialogView.investment_progress_bar.visibility = View.GONE
-                dialogView.saving_investment_progress_bar.visibility = View.GONE
-                dialogView.investment_error.visibility = View.VISIBLE
-            } else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.local_error))
+                showLoading(false)
+                showSavingLoading(false)
+                showError(true)
+            }
+            else -> {
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showLoading(false)
+                showSavingLoading(false)
+                showError(true)
             }
         }
     }
 
+    /**
+     * Show loading
+     */
+    private fun showLoading(show: Boolean) {
+        dialogView.investment_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show saving loading
+     */
+    private fun showSavingLoading(show: Boolean) {
+        dialogView.saving_investment_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show error
+     */
+    private fun showError(show: Boolean) {
+        dialogView.investment_error.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Validate user selection
+     */
     private fun validate(): Boolean {
         return dialogInvestmentAdapter.selectedCryptocurrency != null && dialogView.purchased_value.text.isNotEmpty()
     }
 
+    /**
+     * A message is displayed to the user informing him/her to select a cryptocurrency and enter a quantity.
+     */
     private fun showInvalidateRequest() {
-        val toast = Toast.makeText(context, "Debe selecciona una criptomoneda y añadir un valor adquirido", Toast.LENGTH_LONG)
-        toast.show()
+        Toast.makeText(
+            context,
+            resources.getString(R.string.investment_dialog_invalidate_message),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     companion object {

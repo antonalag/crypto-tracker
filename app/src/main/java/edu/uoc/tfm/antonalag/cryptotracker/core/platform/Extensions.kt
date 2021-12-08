@@ -17,7 +17,7 @@ fun Double.roundToString(decimals: Int): String {
 }
 
 /**
- * Extension that execute a trigger function after delayed teime
+ * Extension that execute a trigger function after delayed time
  */
 fun EditText.afterTextChangedDelayed(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {

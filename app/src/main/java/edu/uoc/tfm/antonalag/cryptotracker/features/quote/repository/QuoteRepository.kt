@@ -6,6 +6,9 @@ import edu.uoc.tfm.antonalag.cryptotracker.features.quote.model.Quote
 
 interface QuoteRepository {
 
+    /**
+     * Get phrase of the day
+     */
     suspend fun getPhraseOfTheDay(): Either<Fail, Quote>
 
 }

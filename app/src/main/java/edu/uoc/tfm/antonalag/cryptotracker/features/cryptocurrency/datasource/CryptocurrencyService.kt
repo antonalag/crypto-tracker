@@ -14,14 +14,12 @@ class CryptocurrencyService(
     private val cryptocurrencyConverter: CryptocurrencyConverter
 ): BaseService() {
 
-    // Servicio para obtener todas las criptomonedas paginadas.
     suspend fun getCurrencies(skip: Int? = 0, limit: Int? = 20): Either<Fail, List<Cryptocurrency>> {
         val params = mapOf(APIConstants.SKIP_PARAM to skip, APIConstants.LIMIT_PARAM to limit)
         return requestGETRaw(
             httpClient,
             Endpoints.cryptocurrenciesUrl,
             params)
-
     }
 
     suspend fun getCurrenciesListViewDto(currency: String, skip: Int? = 0, limit: Int? = 20): Either<Fail, List<CryptocurrencyListViewDto>> {
@@ -53,7 +51,6 @@ class CryptocurrencyService(
         )
     }
 
-    // Servicio para obtener la gráfica de una criptomoneda.
     suspend fun getCurrencyChart(period: String, name: String): Either<Fail, List<CryptocurrencyChart>> {
         val params = mapOf(APIConstants.PERIOD_PARAM to period, APIConstants.COIN_ID_PARAM to name.toLowerCase())
         return requestGET<CryptocurrencyChartResponse, List<CryptocurrencyChart>>(

@@ -1,5 +1,6 @@
 package edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.repository
 
+import android.util.Log
 import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.Either
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.Either.Left
@@ -13,6 +14,8 @@ class CryptocurrencyRepositoryImpl(
     private val cryptocurrencyDao: CryptocurrencyDao
 ) : CryptocurrencyRepository {
 
+    private val TAG = "CryptocurrencyRepositoryImpl"
+
     override suspend fun findAllByUserId(
         userId: Long
     ): Either<Fail, List<LocalCryptocurrency>> {
@@ -20,6 +23,7 @@ class CryptocurrencyRepositoryImpl(
             val response = cryptocurrencyDao.findAllByUserId(userId)
             response?.let { it -> Right(it) } ?: Left(Fail.NotFoundFail)
         } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Left(Fail.LocalFail)
         }
 
@@ -47,6 +51,7 @@ class CryptocurrencyRepositoryImpl(
             val response = cryptocurrencyDao.findById(id)
             response?.let { it -> Right(it) } ?: Left(Fail.NotFoundFail)
         } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Left(Fail.LocalFail)
         }
     }
@@ -79,6 +84,7 @@ class CryptocurrencyRepositoryImpl(
             val response = cryptocurrencyDao.save(cryptocurrencies)
             Right(response)
         } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Left(Fail.LocalFail)
         }
     }
@@ -90,6 +96,7 @@ class CryptocurrencyRepositoryImpl(
             val response = cryptocurrencyDao.delete(id)
             Right(response)
         } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Left(Fail.LocalFail)
         }
     }
@@ -99,6 +106,7 @@ class CryptocurrencyRepositoryImpl(
             val response = cryptocurrencyDao.deleteByUserId(userId)
             Right(response)
         } catch (exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Left(Fail.LocalFail)
         }
     }

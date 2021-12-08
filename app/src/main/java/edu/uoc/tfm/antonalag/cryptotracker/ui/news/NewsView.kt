@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Filter
 import android.widget.Toast
@@ -33,6 +34,9 @@ import kotlinx.android.synthetic.main.main_toolbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 
+/**
+ * Class responsible of displaying news related with cryptocurrencies
+ */
 class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListener {
 
     private val TAG = "NewsView"
@@ -55,6 +59,9 @@ class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListen
         initRequests()
     }
 
+    /**
+     * Initializes the properties of the UI elements
+     */
     private fun initUI() {
         // Set toolbar title
         main_toolbar_title.text = resources.getString(R.string.app_name)
@@ -71,7 +78,7 @@ class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListen
             }
         })
         // Show loading
-        showLoading(true)
+        showView(news_progress_bar, true)
         // Set on click listeners
         saved_button.setOnClickListener {
             startActivity(Intent(this, SavedNewsView::class.java))
@@ -104,6 +111,9 @@ class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListen
         })
     }
 
+    /**
+     * Configure the NewsViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(localCryptocurrencies, ::handleLocalCryptocurrenciesSuccess)
@@ -116,11 +126,19 @@ class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListen
         }
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
+        // get local cryptocurrencies
         viewModel.getCryptocurrencies(user.id)
     }
 
+    /**
+     * It's called when the request for local cryptocurrencies data is successful
+     */
     private fun handleLocalCryptocurrenciesSuccess(cryptocurrencies: List<LocalCryptocurrency>) {
+        Log.v(TAG, resources.getString(R.string.local_cryptocurrencies_request_succesful))
         // Set global variable and add ALL element
         localCryptocurrencies = listOf(LocalCryptocurrency("All", "ALL", "", 0.0,0L)).plus(cryptocurrencies)
         // Initial Request news
@@ -129,8 +147,12 @@ class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListen
         viewModel.getNews(filters, null)
     }
 
+    /**
+     * It's called when the request for news is successful
+     */
     private fun handleNewsSuccess(newsListViewDto: NewsListViewDto) {
-        showLoading(false)
+        Log.v(TAG, resources.getString(R.string.news_request_successful))
+        showView(news_progress_bar,false)
         isLoading = false
         news = newsListViewDto
         newsAdapter.submitList(newsAdapter.currentList.plus(newsListViewDto.data))
@@ -141,79 +163,112 @@ class NewsView : BaseActivity(), FilterNewsDialogFragment.FilterNewsDialogListen
         enableButtons(true)
     }
 
+    /**
+     * It's called when the request for news has failed
+     */
     private fun handleNewsFail(fail: Fail) {
+        Log.v(TAG, resources.getString(R.string.news_request_failed))
         when (fail) {
             is Fail.LocalFail -> {
-                // Hide loading
-                showLoading(false)
-                news_error.visibility = View.VISIBLE
+                Log.e(TAG, resources.getString(R.string.local_error))
+                showView(news_progress_bar, false)
+                showView(news_error, true)
+            }
+            is Fail.ServerFail -> {
+                Log.e(TAG, resources.getString(R.string.server_error))
+                showView(news_progress_bar, false)
+                showView(news_error, true)
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showView(news_progress_bar, false)
+                showView(news_error, true)
             }
         }
     }
 
+    /**
+     * Build the filters to be passed as parameters to the external API request
+     * to obatin the filtered news items
+     */
     private fun makeFilters(
         selectedCryptocurrencies: List<LocalCryptocurrency>,
         orderFilter: String? = null
     ): Map<String, String> {
+        // currency ALL not exists, so it deleted
         val symbolList = selectedCryptocurrencies.map { it.symbol }.filter { it != "ALL" }
+        // Set kind and region
         var map = mutableMapOf(
             KIND_PARAM to "news",
             REGIONS_PARAMS to "es"
 
         )
-
+        // Set currencies
         if(symbolList.isNotEmpty()) {
             val symbols = symbolList.joinToString { it }
             map[CURRENCIES_PARAM] = symbols
         }
 
-
+        // Set order
         orderFilter?.let {
             map.put(FILTER_PARAMS, it)
         }
+        // Return filters map
         return map
     }
 
-    private fun showLoading(show: Boolean) {
-        news_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
+    /**
+     * Enable click action in saved and filters buttons
+     */
     private fun enableButtons(enable: Boolean) {
         saved_button.isClickable = enable
         filters_button.isClickable = enable
     }
 
+    /**
+     * Callback function that detect when the user clicks on FilterNewsDialog confirm button
+     */
     override fun onFilterNewsDialogConfirmClick(dialog: DialogFragment) {
+        // get cryptocurrencyt selected
         val cryptocurrencyFiltersSelected = (dialog as FilterNewsDialogFragment).localCryptocurrencySelected
+        // Set sort value
         val sortValue = dialog.sortValue
+        // buid filters
         val filters = makeFilters(listOf(cryptocurrencyFiltersSelected), sortValue)
         // Close dialog
         filterNewsDialogFragment.dismiss()
         // Show progress bar
-        showLoading(true)
+        showView(news_progress_bar, true)
         // reset adapter
         (news_list_recyclerView.adapter as NewsAdapter).apply {
             submitList(emptyList())
         }
         // Disabled Buttons
         enableButtons(false)
-        isLoading = true
+        // Get filtered news
         viewModel.getNews(filters, null)
     }
 
+    /**
+     * Callback function that detect when the user clicks on FilterNewsDialog cancel button
+     */
     override fun onFilterNewsDialogCancelClick(dialog: DialogFragment) {
+        // Close dialog
         filterNewsDialogFragment.dismiss()
     }
 
+    /**
+     * Show menu dialog
+     */
     private fun showMenuDialog() {
         if(!menuOptionsDialog.isAdded) {
             menuOptionsDialog.show(supportFragmentManager, "MenuOptionsDialog")
         }
     }
 
+    /**
+     * Function that it's called when the user click on filter radio buttons
+     */
     fun onRadioButtonClicked(view: View) {
         filterNewsDialogFragment.onRadioButtonClicked(view)
     }

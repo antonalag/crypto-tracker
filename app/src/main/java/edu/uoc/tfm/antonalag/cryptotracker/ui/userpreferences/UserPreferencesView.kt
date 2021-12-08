@@ -1,12 +1,14 @@
 package edu.uoc.tfm.antonalag.cryptotracker.ui.userpreferences
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.uoc.tfm.antonalag.cryptotracker.CryptoTrackerApp
 import edu.uoc.tfm.antonalag.cryptotracker.R
+import edu.uoc.tfm.antonalag.cryptotracker.R.string.user_preferences_request_successful
 import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.observe
@@ -20,6 +22,9 @@ import kotlinx.android.synthetic.main.detail_toolbar_edit_button.menu_back_butto
 import kotlinx.android.synthetic.main.detail_toolbar_refresh_button.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * Class responsible to handle user preferences information
+ */
 class UserPreferencesView : BaseActivity() {
 
     private val TAG = "UserPreferencesView"
@@ -43,6 +48,9 @@ class UserPreferencesView : BaseActivity() {
         initRequests()
     }
 
+    /**
+     * Initializes the properties of the UI elements
+     */
     private fun initUI() {
         // Set user preferences
         userPreferences = CryptoTrackerApp.instance.userPreferences
@@ -53,6 +61,8 @@ class UserPreferencesView : BaseActivity() {
         // Set initial data
         setTimeInterval()
         setDataUpdate()
+        // Disable all buttons
+        enableAll(isEditButtonClicked)
         // Set on click listeners
         menu_edit_button.setOnClickListener {
             if (!isEditButtonClicked) {
@@ -64,21 +74,33 @@ class UserPreferencesView : BaseActivity() {
             if (validate()) {
                 savePreferences()
             } else {
-                Toast.makeText(this, "Debe seleccionar una moneda, un intervalo de tiempo y un tiempo de actualización de datos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    resources.getString(R.string.user_preferences_not_validated),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         cancel_user_preferences.setOnClickListener {
             isEditButtonClicked = false
+            clearChecks()
             setTimeInterval()
             setDataUpdate()
+            fiatCurrencyAdapter.fiatSelected = userPreferences.fiat
+            fiatCurrencyAdapter.fiatSymbolSelected = userPreferences.fiatSymbol
+            fiatCurrencyAdapter.notifyDataSetChanged()
             enableAll(isEditButtonClicked)
         }
         // init recyclerview
         fiatCurrencyAdapter.fiatSelected = userPreferences.fiat
+        fiatCurrencyAdapter.fiatSymbolSelected = userPreferences.fiatSymbol
         fiat_currencies_list_recycler_view.layoutManager = LinearLayoutManager(this)
         fiat_currencies_list_recycler_view.adapter = fiatCurrencyAdapter
     }
 
+    /**
+     * Configure the UserPreferencesViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(fiatCurrencies, ::handleFiatCurrenciesSuccess)
@@ -91,29 +113,48 @@ class UserPreferencesView : BaseActivity() {
         }
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
         viewModel.getFiats()
     }
 
+    /**
+     * Clear checks in all radiogroups
+     */
+    private fun clearChecks() {
+        radiogroup_time_interval_left.clearCheck()
+        radiogroup_time_interval_right.clearCheck()
+        radiogroup_data_update_right.clearCheck()
+        radiogroup_data_update_left.clearCheck()
+    }
+
+    /**
+     * Enable buttons
+     */
     private fun enableAll(enable: Boolean) {
-        radiobutton_ti_one_day.isEnabled = enable
-        radiobutton_ti_one_week.isEnabled = enable
-        radiobutton_ti_one_month.isEnabled = enable
-        radiobutton_ti_three_months.isEnabled = enable
-        radiobutton_ti_six_months.isEnabled = enable
-        radiobutton_ti_one_year.isEnabled = enable
-        radiobutton_du_five_minutes.isEnabled = enable
-        radiobutton_du_fifteen_minutes.isEnabled = enable
-        radiobutton_du_thirty_minutes.isEnabled = enable
-        radiobutton_du_one_hour.isEnabled = enable
-        radiobutton_du_three_hours.isEnabled = enable
-        radiobutton_du_six_hours.isEnabled = enable
-        radiobutton_du_nine_hours.isEnabled = enable
+        radiobutton_ti_one_day.isClickable = enable
+        radiobutton_ti_one_week.isClickable = enable
+        radiobutton_ti_one_month.isClickable = enable
+        radiobutton_ti_three_months.isClickable = enable
+        radiobutton_ti_six_months.isClickable = enable
+        radiobutton_ti_one_year.isClickable = enable
+        radiobutton_du_five_minutes.isClickable = enable
+        radiobutton_du_fifteen_minutes.isClickable = enable
+        radiobutton_du_thirty_minutes.isClickable = enable
+        radiobutton_du_one_hour.isClickable = enable
+        radiobutton_du_three_hours.isClickable = enable
+        radiobutton_du_six_hours.isClickable = enable
+        radiobutton_du_nine_hours.isClickable = enable
         radiobutton_du_one_day.isClickable = enable
         cancel_user_preferences.visibility = if (enable) View.VISIBLE else View.INVISIBLE
         confirm_user_preferences.visibility = if (enable) View.VISIBLE else View.INVISIBLE
     }
 
+    /**
+     * Set time interval
+     */
     private fun setTimeInterval() {
         val radioButton = when (userPreferences.timeInterval) {
             "24h" ->
@@ -135,6 +176,9 @@ class UserPreferencesView : BaseActivity() {
         timeIntervalSelected = userPreferences.timeInterval
     }
 
+    /**
+     * Set data update
+     */
     private fun setDataUpdate() {
         val radioButton = when (userPreferences.dataUpdate) {
             "5m" ->
@@ -160,7 +204,9 @@ class UserPreferencesView : BaseActivity() {
         dataUpdateSelected = userPreferences.dataUpdate
     }
 
-
+    /**
+     * Time interval radio button on click listener
+     */
     fun onTimeIntervalRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             // Is the button now checked
@@ -190,6 +236,9 @@ class UserPreferencesView : BaseActivity() {
         }
     }
 
+    /**
+     * Clear other selection when user click on any time interval radio button
+     */
     private fun clearOtherTimeIntervalRadioButtons(parentView: View) {
         if (parentView.id == R.id.radiogroup_time_interval_right) {
             radiogroup_time_interval_left.clearCheck()
@@ -198,6 +247,9 @@ class UserPreferencesView : BaseActivity() {
         }
     }
 
+    /**
+     * Data update radio button on click listener
+     */
     fun onDataUpdateRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             // Is the button now checked
@@ -233,6 +285,9 @@ class UserPreferencesView : BaseActivity() {
         }
     }
 
+    /**
+     * Clear other selection when user click on any data update radio button
+     */
     private fun clearOtherDataUpdateRadioButtons(parentView: View) {
         if (parentView.id == R.id.radiogroup_data_update_right) {
             radiogroup_data_update_left.clearCheck()
@@ -241,13 +296,23 @@ class UserPreferencesView : BaseActivity() {
         }
     }
 
+    /**
+     * It's called when the request to get fiats is successful
+     */
     private fun handleFiatCurrenciesSuccess(fiatList: List<Fiat>) {
+        // Submit list to adapter
         fiatCurrencyAdapter.submitList(fiatList)
-        showLoading(false)
+        // hide loading
+        showView(user_preferences_progress_bar, false)
     }
 
+    /**
+     * Save user preferences
+     */
     private fun savePreferences() {
-        showLoading(true)
+        // Show loading
+        showView(user_preferences_progress_bar, true)
+        // Set new user preferences data
         userPreferencesToSave = UserPreferences(
             userPreferences.id,
             fiatCurrencyAdapter.fiatSelected,
@@ -256,40 +321,58 @@ class UserPreferencesView : BaseActivity() {
             dataUpdateSelected,
             userPreferences.userId
         )
+        // Update user preferences
         viewModel.updatePreferences(userPreferencesToSave)
     }
 
+    /**
+     * It's called when the request to update user preferences is successful
+     */
     private fun handleIsUserPreferencesUpdateSuccess(isUpdated: Boolean) {
         if (isUpdated) {
+            Log.v(TAG, resources.getString(user_preferences_request_successful))
+            // set userPreferences global data
             CryptoTrackerApp.instance.userPreferences = userPreferencesToSave
+            userPreferences = userPreferencesToSave
             isEditButtonClicked = false
-            enableAll(isEditButtonClicked)
+            clearChecks()
             setTimeInterval()
             setDataUpdate()
-            showLoading(false)
+            fiatCurrencyAdapter.fiatSelected = userPreferences.fiat
+            fiatCurrencyAdapter.fiatSymbolSelected = userPreferences.fiatSymbol
+            fiatCurrencyAdapter.notifyDataSetChanged()
+            enableAll(isEditButtonClicked)
+            showView(user_preferences_progress_bar, false)
         }
     }
 
+    /**
+     * Validate data
+     */
     private fun validate(): Boolean {
         return !fiatCurrencyAdapter.fiatSelected.isNullOrEmpty() && !timeIntervalSelected.isNullOrEmpty() && !dataUpdateSelected.isNullOrEmpty()
     }
 
-    private fun showLoading(show: Boolean) {
-        user_preferences_progress_bar.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
+    /**
+     * It's called when any requests of user preferences have failed
+     */
     private fun handleUserPreferencesFail(fail: Fail) {
+        Log.v(TAG, resources.getString(R.string.user_preferences_request_failed))
         when (fail) {
             is Fail.ServerFail -> {
-                showLoading(false)
+                Log.e(TAG, resources.getString(R.string.server_error))
+                showView(user_preferences_progress_bar, false)
                 investment_error.visibility = View.VISIBLE
             }
             is Fail.LocalFail -> {
-                showLoading(false)
+                Log.e(TAG, resources.getString(R.string.local_error))
+                showView(user_preferences_progress_bar, false)
                 investment_error.visibility = View.VISIBLE
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showView(user_preferences_progress_bar, false)
+                investment_error.visibility = View.VISIBLE
             }
         }
     }

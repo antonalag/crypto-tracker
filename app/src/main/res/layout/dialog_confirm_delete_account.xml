@@ -45,7 +45,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Cancelar"
+                    android:text="@string/cancelar"
                     android:textColor="@color/third_accent_color"
                     android:textSize="12sp" />
 
@@ -68,7 +68,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="10dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Confirmar"
+                    android:text="@string/confirmar"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

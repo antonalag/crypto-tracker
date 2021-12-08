@@ -385,7 +385,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="12sp"
-                android:text="Cancelar"
+                android:text="@string/cancelar"
                 android:textColor="@color/third_accent_color"
                 android:gravity="center"
                 android:layout_margin="10dp"/>
@@ -407,7 +407,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="12sp"
-                android:text="Guardar"
+                android:text="@string/guardar"
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_margin="10dp"/>

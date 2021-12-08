@@ -3,8 +3,6 @@ package edu.uoc.tfm.antonalag.cryptotracker.core.di
 import androidx.room.Room
 import edu.uoc.tfm.antonalag.cryptotracker.core.db.ApplicationDatabase
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.Network
-import edu.uoc.tfm.antonalag.cryptotracker.features.alarm.repository.AlarmRepository
-import edu.uoc.tfm.antonalag.cryptotracker.features.alarm.repository.AlarmRepositoryImpl
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.converter.CryptocurrencyConverter
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.converter.CryptocurrencyConverterImpl
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.datasource.CryptocurrencyService
@@ -13,7 +11,6 @@ import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.repository.Cr
 import edu.uoc.tfm.antonalag.cryptotracker.features.fiat.datasource.FiatService
 import edu.uoc.tfm.antonalag.cryptotracker.features.fiat.repository.FiatRepository
 import edu.uoc.tfm.antonalag.cryptotracker.features.fiat.repository.FiatRepositoryImpl
-import edu.uoc.tfm.antonalag.cryptotracker.features.investment.model.Investment
 import edu.uoc.tfm.antonalag.cryptotracker.features.investment.repository.InvestmentRepository
 import edu.uoc.tfm.antonalag.cryptotracker.features.investment.repository.InvestmentRepositoryImpl
 import edu.uoc.tfm.antonalag.cryptotracker.features.news.converter.NewsConverter
@@ -45,19 +42,12 @@ val dataModule = module {
     single<NewsService> { NewsService(httpClient = get(), newsConverter = get())}
     single<QuoteService> { QuoteService(httpClient = get()) }
     single<ApplicationDatabase> { Room.databaseBuilder(androidContext(), ApplicationDatabase::class.java, "crypto_tracker_db").build()}
-    single { get<ApplicationDatabase>().alarmDao()}
     single { get<ApplicationDatabase>().cryptocurrencyDao()}
     single { get<ApplicationDatabase>().investmentDao()}
     single { get<ApplicationDatabase>().newsDao()}
     single { get<ApplicationDatabase>().userDao()}
 
     // Repositories
-    single<AlarmRepository> {
-        AlarmRepositoryImpl(
-            alarmDao = get()
-        )
-    }
-
     single<CryptocurrencyRepository> {
         CryptocurrencyRepositoryImpl(
             cryptocurrencyService = get(),

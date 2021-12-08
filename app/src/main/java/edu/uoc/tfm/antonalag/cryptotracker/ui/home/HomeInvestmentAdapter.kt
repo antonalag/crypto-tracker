@@ -50,6 +50,7 @@ class HomeInvestmentAdapter(private val context: Context) :
         holder: HomeInvestmentAdapter.HomeInvestmentViewHolder,
         position: Int
     ) {
+        // Set configuration to allow the swipe
         viewBinderHelper.setOpenOnlyOne(true)
         viewBinderHelper.bind(holder.itemView.investment_list_item_swipe, getItem(position).name)
         viewBinderHelper.closeLayout(getItem(position).name)
@@ -83,12 +84,14 @@ class HomeInvestmentAdapter(private val context: Context) :
         }
     }
 
-    // Override onAattach method to instantiate DeleteCLickListener
+    /**
+     * Override onAattach method to instantiate HomeInvestmentAdapterClickListener
+     */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         // Verify that the host acitivity implements the callback interface
         try {
-            // Instantiate the DeleteCLickListener to be able to send events to the host
+            // Instantiate the HomeInvestmentAdapterClickListener to be able to send events to the host
             listener = context as HomeInvestmentAdapterClickListener
         } catch (e: ClassCastException) {
             throw ClassCastException("$context must implement HomeInvestmentAdapterClickListener")

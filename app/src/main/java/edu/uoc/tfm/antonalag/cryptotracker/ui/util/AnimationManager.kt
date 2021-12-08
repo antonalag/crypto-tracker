@@ -5,12 +5,18 @@ import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.view.View
 
+/**
+ * Clas that manages animations
+ */
 class AnimationManager {
 
     enum class AnimationType {
         GROW_AND_SHRINK
     }
 
+    /**
+     * add grow and shirnk animation in a view
+     */
     fun growAndShrink(view: View): ObjectAnimator {
         val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
             view,

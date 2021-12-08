@@ -60,8 +60,11 @@ class HomeViewModel(
     private val _isLocalCryptocurrencyDeleted: MutableLiveData<Boolean> = MutableLiveData()
     val isLocalCryptocurrencyDeleted: LiveData<Boolean> = _isLocalCryptocurrencyDeleted
 
+    /**
+     * Local request to save cryptocurrencies
+     */
     fun saveCryptocurrencies(list: List<LocalCryptocurrency>) {
-        Log.v(TAG, "Save cryptocurrencies")
+        Log.v(TAG, "Request to save cryptocurrencies")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 cryptocurrencyRepository.save(list)
@@ -72,12 +75,18 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when saveCryptocurrencies function is successful
+     */
     private fun handleSavedCryptocurrencies(list: List<Long>) {
         _saveCryptocurrencies.value = list
     }
 
+    /**
+     * Local request to get local cryptocurrencies
+     */
     fun getLocalCryptocurrencies(userId: Long) {
-        Log.v(TAG, "Request cryptocurrencies saved in local storage for user[$userId]")
+        Log.v(TAG, "Request cryptocurrencies saved in local storage for user id: $userId")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 cryptocurrencyRepository.findAllByUserId(userId)
@@ -88,10 +97,16 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when handleLocalCryptocurrencies function is successful
+     */
     private fun handleLocalCryptocurrencies(list: List<LocalCryptocurrency>) {
         _localCryptocurencies.value = list
     }
 
+    /**
+     * External API request to get quote of the day
+     */
     fun getPhraseOfTheDay() {
         Log.v(TAG, "Request phrase of the day")
         viewModelScope.launch {
@@ -104,12 +119,21 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when getPhraseOfTheDay function is successful
+     */
     private fun handleQuote(phrase: Quote) {
         _quote.value = phrase
     }
 
+    /**
+     * External API request to get cryptocurrencies converted in specific entity
+     */
     fun getCryptocurrencytListViewDtoList(currency: String, skip: Int? = 0, limit: Int? = 20) {
-        Log.v(TAG, "Request paged cryptocurrency list views from remote API")
+        Log.v(
+            TAG,
+            "Request paged cryptocurrency list views for currency: $currency. Skip: $skip, limit: $limit"
+        )
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 cryptocurrencyRepository.findAllCryptocurrencyListViewDto(currency, skip, limit)
@@ -120,14 +144,20 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when getCryptocurrencytListViewDtoList function is successful
+     */
     private fun handleListViewDtoList(list: List<CryptocurrencyListViewDto>) {
         _cryptocurrencyListViewDtoList.value = list
     }
 
+    /**
+     * External API request to get cryptocurrencies converted in specific entity
+     */
     fun getCryptocurrencyCardViewDtoList(names: List<String>, currency: String, period: String) {
         Log.v(
             TAG,
-            "Request cryptocurrency card views from remote API for " + names.joinToString { it })
+            "Request cryptocurrency card views from remote API for names: " + names.joinToString { it } + " and currency: $currency and period: $period")
         viewModelScope.launch {
             coroutineScope {
                 val deferredCardDtos = names.map {
@@ -138,6 +168,7 @@ class HomeViewModel(
                         )
                     }
                 }
+                // Await all async requests
                 val cardDtos: List<Either<Fail, CryptocurrencyCardViewDto>> =
                     deferredCardDtos.awaitAll()
                 // Check if any petition is failed and log it
@@ -149,7 +180,6 @@ class HomeViewModel(
                     when (it) {
                         is Either.Right -> it.success
                         is Either.Left -> null
-                        else -> null
                     }
                 }
                 handleCardViewDtoList(successList, period)
@@ -157,36 +187,37 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Handle data requested from getCryptocurrencyCardViewDtoList when is successful and request an external API to get cryptocurrency charts
+     */
     private fun handleCardViewDtoList(
         cardViewDtoList: List<CryptocurrencyCardViewDto>,
         period: String
     ) {
         Log.v(
             TAG,
-            "Request cryptocurrency charts from remote API for " + cardViewDtoList.joinToString { it.name })
+            "Request cryptocurrency charts from remote API for names: " + cardViewDtoList.joinToString { it.name } + " and period: $period")
         viewModelScope.launch {
             cardViewDtoList.forEach {
                 val eitherChart = withContext(Dispatchers.IO) {
                     cryptocurrencyRepository.findChart(period, it.name.toLowerCase())
                 }
-                when(eitherChart) {
+                when (eitherChart) {
                     is Either.Left -> it.chart = emptyList()
                     is Either.Right -> it.chart = eitherChart.success
                 }
-                /*when (val eitherChart =
-                    cryptocurrencyRepository.findChart(period, it.name.toLowerCase())) {
-                    is Either.Left -> it.chart = emptyList()
-                    is Either.Right -> it.chart = eitherChart.success
-                }*/
             }
             _cryptocurrencyCardViewDtoList.value = cardViewDtoList
         }
     }
 
+    /**
+     * Local request to get investments
+     */
     fun getInvestments(cryptocurrencyIds: List<Long>) {
         Log.v(
             TAG,
-            "Request investments saved in local storage for " + cryptocurrencyIds.joinToString { it.toString() })
+            "Request investments saved in local storage for cryptocurrency ids: " + cryptocurrencyIds.joinToString { it.toString() })
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 investmentRepository.findByCryptocurrencyIds(cryptocurrencyIds)
@@ -197,11 +228,18 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when getInvestments function is successful
+     */
     private fun handleInvestments(investments: List<Investment>) {
         _investments.value = investments
     }
 
+    /**
+     * Local request to save investment
+     */
     fun saveInvestment(investment: Investment) {
+        Log.v(TAG, "Request to save investment")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 investmentRepository.save(investment)
@@ -212,11 +250,18 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when saveInvestment function is successful
+     */
     private fun handleSavedInvestments(investmentId: Long) {
         _saveInvestment.value = investmentId
     }
 
+    /**
+     * Local request to delete investment
+     */
     fun deleteInvestment(id: Long) {
+        Log.v(TAG, "Request to delete investment with id: $id")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 investmentRepository.delete(id)
@@ -227,11 +272,18 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when deleteInvestment function is successful
+     */
     private fun handleDeleteInvestment(count: Int) {
         _isInvestmentDeleted.value = count > 0
     }
 
+    /**
+     * Local request to update investment
+     */
     fun updateInvestment(investment: Investment) {
+        Log.v(TAG, "Request to update investment")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 investmentRepository.update(investment)
@@ -242,11 +294,18 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when updateInvestment function is successful
+     */
     private fun handleUpdateInvestment(count: Int) {
         _isInvestmentUpdated.value = count > 0
     }
 
+    /**
+     * Local request to delete local cryptocurrency
+     */
     fun deleteLocalCryptocurrency(id: Long) {
+        Log.v(TAG, "Request to delete local cryptocurrency with id: $id")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 cryptocurrencyRepository.delete(id)
@@ -257,6 +316,9 @@ class HomeViewModel(
         }
     }
 
+    /**
+     * Called when deleteLocalCryptocurrency function is successful
+     */
     private fun handleDeleteLocalCryptocurrency(count: Int) {
         _isLocalCryptocurrencyDeleted.value = count > 0
     }

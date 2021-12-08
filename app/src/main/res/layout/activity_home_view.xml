@@ -41,7 +41,6 @@
                 android:layout_marginHorizontal="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Buenos días, Usuario"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
 
@@ -56,7 +55,6 @@
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
                 android:textStyle="italic"
-                android:text="&quot;De cerca nadie es normal&quot; -"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -71,7 +69,6 @@
                 android:layout_marginHorizontal="10dp"
                 android:alpha="0.85"
                 android:fontFamily="@font/roboto_bold"
-                android:text="Caetano Veloso"
                 android:textColor="@color/white"
                 android:textSize="8sp" />
 
@@ -107,7 +104,7 @@
                 android:layout_toRightOf="@+id/investment_iv_cryptocurrency_icon"
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Criptomonedas"
+                android:text="@string/criptomonedas"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
@@ -187,7 +184,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Portfolio"
+                android:text="@string/portfolio"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textAlignment="center"

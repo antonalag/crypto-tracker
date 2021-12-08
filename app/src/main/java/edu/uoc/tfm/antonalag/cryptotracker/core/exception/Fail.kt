@@ -1,7 +1,7 @@
 package edu.uoc.tfm.antonalag.cryptotracker.core.exception
 
 /**
- * Base class for handling errors, exceptions or failures
+ * Base class for handling errors, exceptions or fails
  */
 sealed class Fail {
 

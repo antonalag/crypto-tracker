@@ -3,6 +3,7 @@ package edu.uoc.tfm.antonalag.cryptotracker.ui.cryptocurrency
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -20,7 +21,6 @@ import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.observe
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.roundToString
-import edu.uoc.tfm.antonalag.cryptotracker.core.util.DateXAxisValueFormatter
 import edu.uoc.tfm.antonalag.cryptotracker.core.util.NumberUtil
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.model.Cryptocurrency
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.model.CryptocurrencyChart
@@ -31,7 +31,9 @@ import kotlinx.android.synthetic.main.detail_toolbar_refresh_button.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 
-
+/**
+ * Class responsible for displaying detailed information about cryptocurrency.
+ */
 class CryptocurrencyStatisticsView : BaseActivity() {
 
     private val TAG = "CryptocurrencyStatisticsView"
@@ -56,12 +58,18 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         initRequests()
     }
 
+    /**
+     * Handle data sent from HomeView activity
+     */
     private fun handleIntent() {
         val intent = intent
         localCryptocurrencyId = intent.getLongExtra("localCryptocurrencyId", 0L)
         localCryptocurrencyName = intent.getStringExtra("localCryptocurrencyName") ?: ""
     }
 
+    /**
+     * Initializes the properties of the UI elements
+     */
     private fun initUI() {
         // Set toolbar title
         detail_refresh_button_toolbar_title.text = resources.getString(R.string.statistics)
@@ -71,18 +79,20 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         }
         // Set refresh button
         menu_refresh_button.setOnClickListener {
-            cryptocurrency_principal_data_progress_bar.visibility = View.GONE
-            cryptocurrency_secondary_data_progress_bar.visibility = View.GONE
-            cryptocurrency_links_progress_bar.visibility = View.GONE
-            cryptocurrency_chart_progress_bar.visibility = View.GONE
+            showView(cryptocurrency_principal_data_progress_bar, true)
+            showView(cryptocurrency_secondary_data_progress_bar, true)
+            showView(cryptocurrency_links_progress_bar, true)
+            showView(cryptocurrency_chart_progress_bar, true)
             // Get Cryptocurrency
             viewModel.getCryptocurrencyData(localCryptocurrencyName, userPreferences.fiat)
         }
         // Set time interval layouts
-        timeIntervals = listOf<LinearLayout>(one_day, one_week, one_month, three_month, six_month, one_year)
+        timeIntervals =
+            listOf<LinearLayout>(one_day, one_week, one_month, three_month, six_month, one_year)
+        // Disable activity buttons
         enableTimeIntervalButtons(false)
         enableLinkButtons(false)
-        // Set time interval
+        // Set backgrounds time interval's buttons
         configureTimeIntervalButtons(userPreferences.timeInterval)
         // Set time interval on click listener
         timeIntervals.forEach {
@@ -96,11 +106,17 @@ class CryptocurrencyStatisticsView : BaseActivity() {
 
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
         // Get Cryptocurrency
         viewModel.getCryptocurrencyData(localCryptocurrencyName, userPreferences.fiat)
     }
 
+    /**
+     * Configure the CryptocurrencyStatisticsViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(cryptocurrency, ::handleCryptocurrencySuccess)
@@ -118,14 +134,21 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         }
     }
 
+    /**
+     * It's called when the request for cryptocurrency information is successful
+     */
     private fun handleCryptocurrencySuccess(cryptocurrencyFromRequest: Cryptocurrency) {
+        Log.v(
+            TAG,
+            resources.getString(R.string.cryptocurrency_statistics_view_cryptocurrency_request_successful)
+        )
         cryptocurrency = cryptocurrencyFromRequest
         // Set cryptocurrency data on screen
         setCryptocurrencyData()
         // Hide progress bars
-        cryptocurrency_principal_data_progress_bar.visibility = View.GONE
-        cryptocurrency_secondary_data_progress_bar.visibility = View.GONE
-        cryptocurrency_links_progress_bar.visibility = View.GONE
+        showView(cryptocurrency_principal_data_progress_bar, false)
+        showView(cryptocurrency_secondary_data_progress_bar, false)
+        showView(cryptocurrency_links_progress_bar, false)
 
         // set on click listener in links
         setOnClickListenerLinkButtons(
@@ -134,7 +157,7 @@ class CryptocurrencyStatisticsView : BaseActivity() {
             cryptocurrencyFromRequest.twitterUrl
         )
 
-        // Enable alarm and links buttons
+        // Enable links buttons
         enableLinkButtons(true)
 
         // Get chart info
@@ -143,69 +166,133 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         viewModel.getInvestmentData(localCryptocurrencyId)
     }
 
+    /**
+     * It's called when the request for cryptocurrency information has failed
+     */
     private fun handleCryptocurrencyFail(fail: Fail) {
+        Log.v(
+            TAG,
+            resources.getString(R.string.cryptocurrency_statistics_view_cryptocurrency_request_failed)
+        )
         when (fail) {
             is Fail.ServerFail -> {
-                cryptocurrency_principal_data_progress_bar.visibility = View.GONE
-                cryptocurrency_principal_data_error.visibility = View.VISIBLE
-                cryptocurrency_links_progress_bar.visibility = View.GONE
-                cryptocurrency_links_error.visibility = View.VISIBLE
-                cryptocurrency_secondary_data_progress_bar.visibility = View.GONE
-                cryptocurrency_secondary_data_error.visibility = View.VISIBLE
-                cryptocurrency_chart_progress_bar.visibility = View.GONE
-                cryptocurrency_chart_error.visibility = View.VISIBLE
+                Log.e(TAG, resources.getString(R.string.server_error))
+                showView(cryptocurrency_principal_data_progress_bar, false)
+                showView(cryptocurrency_links_progress_bar, false)
+                showView(cryptocurrency_secondary_data_progress_bar, false)
+                showView(cryptocurrency_chart_progress_bar, false)
+
+                showView(cryptocurrency_principal_data_error, true)
+                showView(cryptocurrency_links_error, true)
+                showView(cryptocurrency_secondary_data_error, true)
+                showView(cryptocurrency_chart_error, true)
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showView(cryptocurrency_principal_data_progress_bar, false)
+                showView(cryptocurrency_links_progress_bar, false)
+                showView(cryptocurrency_secondary_data_progress_bar, false)
+                showView(cryptocurrency_chart_progress_bar, false)
+
+                showView(cryptocurrency_principal_data_error, true)
+                showView(cryptocurrency_links_error, true)
+                showView(cryptocurrency_secondary_data_error, true)
+                showView(cryptocurrency_chart_error, true)
             }
         }
     }
 
+    /**
+     * It's called when the request for investment information is successful
+     */
     private fun handleInvestmentSuccess(investment: Investment) {
-        // Set investment data
-        investment_quantity_value.text = NumberUtil.ruleOfThreeCalculateYValue(cryptocurrency.price, 1, investment.totalInvested).roundToString(2)
-        investment_value_value.text = investment.totalInvested.toString() + " ${userPreferences.fiatSymbol}"
-        when {
-            cryptocurrency.priceChange1d < 0 -> {
-                investment_arrow.rotation = 90.0F
-                // Set tint
-                investment_arrow.setColorFilter(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.google_color
+        // Check if investment not exists
+        if (investment.id == 0L) {
+            Log.v(
+                TAG,
+                resources.getString(R.string.cryptocurrency_statistics_view_investment_request_not_found)
+            )
+            showView(investment_data_progress_bar, false)
+            showView(investment_data_empty, true)
+        } else {
+            Log.v(
+                TAG,
+                resources.getString(R.string.cryptocurrency_statistics_view_investment_request_successful)
+            )
+            // Set investment data
+            investment_value_value.text =
+                NumberUtil.ruleOfThreeCalculateYValue(
+                    cryptocurrency.price,
+                    1,
+                    investment.totalInvested
+                ).roundToString(2) + " ${userPreferences.fiatSymbol}"
+            investment_quantity_value.text =
+                investment.totalInvested.toString() + " ${userPreferences.fiatSymbol}"
+            when {
+                cryptocurrency.priceChange1d < 0 -> {
+                    investment_arrow.rotation = 90.0F
+                    // Set tint
+                    investment_arrow.setColorFilter(
+                        ContextCompat.getColor(
+                            applicationContext,
+                            R.color.google_color
+                        )
                     )
-                )
-            }
-            cryptocurrency.priceChange1d == 0.0 -> {
-                investment_arrow.visibility = View.GONE
-            }
-            else -> {
-                investment_arrow.rotation = -90.0F
-                // Set tint
-                investment_arrow.setColorFilter(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.detail_chart_line_color
+                }
+                cryptocurrency.priceChange1d == 0.0 -> {
+                    investment_arrow.visibility = View.GONE
+                }
+                else -> {
+                    investment_arrow.rotation = -90.0F
+                    // Set tint
+                    investment_arrow.setColorFilter(
+                        ContextCompat.getColor(
+                            applicationContext,
+                            R.color.detail_chart_line_color
+                        )
                     )
-                )
+                }
             }
+            showView(investment_data_progress_bar, false)
         }
-        investment_data_progress_bar.visibility = View.GONE
     }
 
+    /**
+     * It's called when the request for investment information has failed
+     */
     private fun handleInvestmentFail(fail: Fail) {
+        Log.v(
+            TAG,
+            resources.getString(R.string.cryptocurrency_statistics_view_investment_request_failed)
+        )
         when (fail) {
             is Fail.LocalFail -> {
-                investment_data_progress_bar.visibility = View.GONE
-                investment_data_error.visibility = View.VISIBLE
+                Log.e(TAG, resources.getString(R.string.local_error))
+                showView(investment_data_progress_bar, false)
+                showView(investment_data_error, true)
+            }
+            is Fail.NotFoundFail -> {
+                Log.e(TAG, resources.getString(R.string.not_found_error))
+                showView(investment_data_progress_bar, false)
+                showView(investment_data_empty, true)
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showView(investment_data_progress_bar, false)
+                showView(investment_data_error, true)
             }
         }
     }
 
+    /**
+     * It's called when the request for cryptocurrency chart data is successful
+     */
     private fun handleCryptocurrencyChartSuccess(chart: List<CryptocurrencyChart>) {
+        Log.v(
+            TAG,
+            resources.getString(R.string.cryptocurrency_statistics_view_cryptocurrency_chart_request_successful)
+        )
+        // Configure chart data
         val chartView = cryptocurrency_chart
         val entries: List<Entry> = chart.map { Entry(it.date, it.price) }
         val dataSet = LineDataSet(entries, "$localCryptocurrencyName price evolution")
@@ -222,7 +309,6 @@ class CryptocurrencyStatisticsView : BaseActivity() {
 
         val xAxis: XAxis = chartView.xAxis
         xAxis.isEnabled = false
-        xAxis.valueFormatter = DateXAxisValueFormatter()
 
         val rightYAxis: YAxis = chartView.axisRight
         rightYAxis.isEnabled = false
@@ -236,21 +322,34 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         chartView.invalidate()
 
         enableTimeIntervalButtons(true)
-        cryptocurrency_chart_progress_bar.visibility = View.GONE
+        showView(cryptocurrency_chart_progress_bar, false)
     }
 
+    /**
+     * It's called when the request for cryptocurrency chart data has failed
+     */
     private fun handleCryptocurrencyChartFail(fail: Fail) {
+        Log.v(
+            TAG,
+            resources.getString(R.string.cryptocurrency_statistics_view_cryptocurrency_chart_request_failed)
+        )
         when (fail) {
             is Fail.ServerFail -> {
-                cryptocurrency_chart_progress_bar.visibility = View.GONE
-                cryptocurrency_chart_error.visibility = View.VISIBLE
+                Log.e(TAG, resources.getString(R.string.server_error))
+                showView(cryptocurrency_chart_progress_bar, false)
+                showView(cryptocurrency_chart_error, true)
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showView(cryptocurrency_chart_progress_bar, false)
+                showView(cryptocurrency_chart_error, true)
             }
         }
     }
 
+    /**
+     * Enable click action in time interval buttons
+     */
     private fun enableTimeIntervalButtons(enable: Boolean) {
         one_day.isClickable = enable
         one_week.isClickable = enable
@@ -259,12 +358,19 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         six_month.isClickable = enable
     }
 
+    /**
+     * Enable click action in link buttons
+     */
     private fun enableLinkButtons(enable: Boolean) {
         reddit_link.isClickable = enable
         twitter_link.isClickable = enable
         web_link.isClickable = enable
     }
 
+    /**
+     * Add click action listeners in link buttons. When link button is clicked,
+     * the user's configured browser will open the link that has been established
+     */
     private fun setOnClickListenerLinkButtons(
         webLink: String?,
         redditLink: String?,
@@ -295,6 +401,9 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         }
     }
 
+    /**
+     * Set all cryptocurrency-related information in the UI
+     */
     private fun setCryptocurrencyData() {
         // Set image
         Glide.with(this)
@@ -332,7 +441,8 @@ class CryptocurrencyStatisticsView : BaseActivity() {
             }
         }
         // Set price
-        cryptocurrency_price.text = cryptocurrency.price.roundToString(2) + " ${userPreferences.fiatSymbol}"
+        cryptocurrency_price.text =
+            cryptocurrency.price.roundToString(2) + " ${userPreferences.fiatSymbol}"
         // Set percentage change
         cryptocurrency_change_percentage.text = cryptocurrency.priceChange1d.roundToString(2) + " %"
         // Set ranking value
@@ -355,9 +465,12 @@ class CryptocurrencyStatisticsView : BaseActivity() {
         twitterLink = cryptocurrency.twitterUrl
     }
 
+    /**
+     * Configure the time interval buttons so that when user clicks on them, the background color changes.
+     */
     private fun configureTimeIntervalButtons(selected: String) {
 
-        timeIntervals.first{ (it.getChildAt(0) as TextView).text == selected }.apply {
+        timeIntervals.first { (it.getChildAt(0) as TextView).text == selected }.apply {
             this.background = ContextCompat.getDrawable(
                 applicationContext,
                 R.drawable.background_selected_shape
@@ -371,6 +484,5 @@ class CryptocurrencyStatisticsView : BaseActivity() {
             )
         }
     }
-
 
 }

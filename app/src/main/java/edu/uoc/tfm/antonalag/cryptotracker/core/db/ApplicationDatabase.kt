@@ -4,8 +4,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import edu.uoc.tfm.antonalag.cryptotracker.core.converter.BaseConverters
-import edu.uoc.tfm.antonalag.cryptotracker.features.alarm.datasource.AlarmDao
-import edu.uoc.tfm.antonalag.cryptotracker.features.alarm.model.Alarm
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.datasource.CryptocurrencyDao
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.model.LocalCryptocurrency
 import edu.uoc.tfm.antonalag.cryptotracker.features.investment.datasource.InvestmentDao
@@ -23,7 +21,6 @@ import java.util.concurrent.Executors
     User::class,
     LocalCryptocurrency::class,
     LocalNews::class,
-    Alarm::class,
     UserPreferences::class,
     UserPassword::class,
     Investment::class],
@@ -33,7 +30,6 @@ abstract class ApplicationDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun cryptocurrencyDao(): CryptocurrencyDao
     abstract fun newsDao(): NewsDao
-    abstract fun alarmDao(): AlarmDao
     abstract fun investmentDao(): InvestmentDao
 
     companion object {

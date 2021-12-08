@@ -1,5 +1,6 @@
 package edu.uoc.tfm.antonalag.cryptotracker.features.news.repository
 
+import android.util.Log
 import edu.uoc.tfm.antonalag.cryptotracker.core.db.ApplicationDatabase
 import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.Either
@@ -14,11 +15,14 @@ class NewsRepositoryImpl(
     private val newsDao: NewsDao
 ): NewsRepository {
 
+    private val TAG = "NewsRepositoryImpl"
+
     override suspend fun findAllByUserId(userId: Long): Either<Fail, List<LocalNews>> {
         return try {
             val response = newsDao.findAllByUserId(userId)
             Either.Right(response)
         } catch(exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -32,6 +36,7 @@ class NewsRepositoryImpl(
             val response = newsDao.findById(id)
             Either.Right(response)
         } catch(exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -41,6 +46,7 @@ class NewsRepositoryImpl(
             val response = newsDao.newsExistsByUrl(url)
             Either.Right(response)
         } catch(exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -50,6 +56,7 @@ class NewsRepositoryImpl(
             val response = newsDao.save(news)
             Either.Right(response)
         } catch(exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -59,6 +66,7 @@ class NewsRepositoryImpl(
             val response = newsDao.delete(id)
             Either.Right(response)
         } catch(exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }
@@ -68,6 +76,7 @@ class NewsRepositoryImpl(
             val response = newsDao.deleteByUserId(userId)
             Either.Right(response)
         } catch(exception: Throwable) {
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.LocalFail)
         }
     }

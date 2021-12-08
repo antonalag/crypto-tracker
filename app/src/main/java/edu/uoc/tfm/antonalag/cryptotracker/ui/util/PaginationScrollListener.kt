@@ -22,7 +22,7 @@ abstract class PaginationScrollListener constructor() : RecyclerView.OnScrollLis
         this.layoutManager = layoutManager
     }
 
-    // Methos get callback when user scroll the list
+    // Method get callback when user scroll the list
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
 

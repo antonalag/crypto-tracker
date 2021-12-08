@@ -17,7 +17,10 @@ import java.io.Serializable
 import java.lang.ClassCastException
 import java.lang.IllegalStateException
 
-class ExchangeFiatDialogFragment: DialogFragment() {
+/**
+ * Fragment that shows Fiat dialog
+ */
+class ExchangeFiatDialogFragment : DialogFragment() {
 
     private val dialogFiatAdapter = ExchangeFiatDialogAdapter()
     private lateinit var layoutManager: LinearLayoutManager
@@ -25,10 +28,16 @@ class ExchangeFiatDialogFragment: DialogFragment() {
     private lateinit var listener: ExchangeFiatDialogListener
     private lateinit var fiats: List<Fiat>
 
+    /**
+     * Set necessary data passed as arguments
+     */
     private fun setFiats() {
         val jsonData = arguments?.getString("data") ?: ""
-        val itemType = object: TypeToken<List<Fiat>>() {}.type
-        fiats = if(jsonData.isNullOrEmpty()) emptyList() else Gson().fromJson<List<Fiat>>(jsonData, itemType)
+        val itemType = object : TypeToken<List<Fiat>>() {}.type
+        fiats = if (jsonData.isNullOrEmpty()) emptyList() else Gson().fromJson<List<Fiat>>(
+            jsonData,
+            itemType
+        )
     }
 
     /**
@@ -64,8 +73,8 @@ class ExchangeFiatDialogFragment: DialogFragment() {
             }
 
             dialogView.exchange_fiat_dialog_confirm.setOnClickListener {
-                if(validate()) {
-                    listener.onExchangeFiatDialogConfirmClick(dialogFiatAdapter.fiatSelected)
+                if (validate()) {
+                    listener.onExchangeFiatDialogConfirmClick(dialogFiatAdapter.fiatSelected!!)
                 } else {
                     showInvalidateRequest()
                 }
@@ -76,7 +85,9 @@ class ExchangeFiatDialogFragment: DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the ExchangeFiatDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the ExchangeFiatDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface
@@ -89,15 +100,20 @@ class ExchangeFiatDialogFragment: DialogFragment() {
         }
     }
 
+    /**
+     * Validate user selection
+     */
     private fun validate(): Boolean {
         // Check if user select any elements of the list
         return dialogFiatAdapter.fiatSelected != null
     }
 
+    /**
+     * A message is displayed to the user informing him/her to select a fiat.
+     */
     private fun showInvalidateRequest() {
-        val toast =
-            Toast.makeText(context, "No se ha seleccionado ningún elemento", Toast.LENGTH_LONG)
-        toast.show()
+        Toast.makeText(context, resources.getString(R.string.item_no_selected), Toast.LENGTH_LONG)
+            .show()
     }
 
     companion object {

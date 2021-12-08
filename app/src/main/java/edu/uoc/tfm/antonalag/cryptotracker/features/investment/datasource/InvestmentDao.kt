@@ -1,9 +1,6 @@
 package edu.uoc.tfm.antonalag.cryptotracker.features.investment.datasource
 
 import androidx.room.*
-import edu.uoc.tfm.antonalag.cryptotracker.core.exception.Fail
-import edu.uoc.tfm.antonalag.cryptotracker.core.platform.Either
-import edu.uoc.tfm.antonalag.cryptotracker.features.alarm.model.Alarm
 import edu.uoc.tfm.antonalag.cryptotracker.features.investment.model.Investment
 
 @Dao

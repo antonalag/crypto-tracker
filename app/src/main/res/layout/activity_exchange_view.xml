@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginVertical="20dp"
                 android:layout_toRightOf="@id/exchange_icon"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="@string/converter"
@@ -91,7 +91,6 @@
                         android:layout_marginVertical="10dp"
                         android:layout_marginRight="10dp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="EUR"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
@@ -141,7 +140,6 @@
                         android:layout_marginVertical="10dp"
                         android:layout_marginRight="10dp"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="BTC"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
 
@@ -215,7 +213,6 @@
                     android:textSize="16sp"
                     android:alpha="0.85"
                     android:textColor="@color/white"
-                    android:text="0.00 EUR = "
                     android:gravity="right"
                     />
 

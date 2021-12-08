@@ -10,12 +10,7 @@ class FiatRepositoryImpl(
 ): FiatRepository {
 
     override suspend fun findAll(): Either<Fail, List<Fiat>> {
-        return try {
-            val response = fiatService.getFiats()
-            Either.Right(response)
-        } catch(exception: Throwable) {
-            Either.Left(Fail.ServerFail)
-        }
+        return fiatService.getFiats()
     }
 
 }

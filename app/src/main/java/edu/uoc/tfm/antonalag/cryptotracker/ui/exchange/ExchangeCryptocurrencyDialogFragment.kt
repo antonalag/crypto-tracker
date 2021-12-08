@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -23,7 +24,12 @@ import java.lang.ClassCastException
 import java.lang.IllegalStateException
 import kotlin.properties.Delegates
 
+/**
+ * Fragment that shows Cryptocurrency dialog
+ */
 class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
+
+    private val TAG = "ExchangeCryptocurrencyDialogFragment"
 
     private val viewModel by sharedViewModel<ExchangeViewModel>()
     private val dialogCryptocurrencyAdapter = ExchangeDialogCryptocurrencyAdapter()
@@ -33,6 +39,9 @@ class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
     private var isLoading by Delegates.notNull<Boolean>()
     private lateinit var fiatName: String
 
+    /**
+     * Set necessary data passed as arguments
+     */
     private fun setFiatName() {
         fiatName = arguments?.getString("fiatName") ?: CryptoTrackerApp.instance.userPreferences.fiat
     }
@@ -57,6 +66,7 @@ class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
             // Pass null as the parent view because its going in the dialog layout
             dialogView = inflater.inflate(R.layout.dialog_exchange_cryptocurrency, null)
             builder.setView(dialogView)
+            // Init recylcer view
             layoutManager = LinearLayoutManager(activity)
             dialogView.exchange_dialog_cryptocurrency_list_recyclerView.layoutManager =
                 layoutManager
@@ -79,6 +89,7 @@ class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
 
             })
 
+            // Set on click listeners
             dialogView.exchange_dialog_cancel.setOnClickListener {
                 listener.onExchangeCryptocurrencyDialogCancelClick()
             }
@@ -97,7 +108,9 @@ class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the ExchangeCryptocurrencyDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the ExchangeCryptocurrencyDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface
@@ -110,11 +123,18 @@ class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
         isLoading = true
+        // Get cryptocurrencies
         viewModel.getCryptocurrencies(fiatName, 0, 10)
     }
 
+    /**
+     * Configure the ExchangeViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(cryptocurrencyListViewDtos, ::renderCryptocurrencies)
@@ -122,38 +142,76 @@ class ExchangeCryptocurrencyDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * It's called when the request for cryptocurrencies information is successful
+     */
     private fun renderCryptocurrencies(list: List<CryptocurrencyListViewDto>) {
         if (list.isEmpty()) {
-            dialogView.exchange_dialog_cryptocurency_progress_bar.visibility = View.GONE
-            dialogView.exchange_dialog_empty_cryptocurrencies.visibility = View.VISIBLE
+            Log.v(TAG, resources.getString(R.string.cryptocurrency_request_not_found))
+            showLoading(false)
+            showEmpty(true)
         } else {
+            Log.v(TAG, resources.getString(R.string.cryptocurrency_request_successful))
             dialogCryptocurrencyAdapter.submitList(dialogCryptocurrencyAdapter.currentList.plus(list))
-            dialogView.exchange_dialog_cryptocurency_progress_bar.visibility = View.GONE
+            showLoading(false)
         }
         isLoading = false
     }
 
+    /**
+     * It's called when the request cryptocurrencies information has failed
+     */
     private fun handleFail(fail: Fail) {
+        Log.v(TAG, resources.getString(R.string.cryptocurrency_request_failed))
         when (fail) {
             is Fail.ServerFail -> {
-                dialogView.exchange_dialog_cryptocurency_progress_bar.visibility = View.GONE
-                dialogView.exchange_dialog_cryptocurrencies_error.visibility = View.VISIBLE
+                Log.e(TAG, resources.getString(R.string.server_error))
+                showLoading(false)
+                showError(true)
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                showLoading(false)
+                showError(true)
             }
         }
     }
 
+    /**
+     * Show loading
+     */
+    private fun showLoading(show: Boolean) {
+        dialogView.exchange_dialog_cryptocurency_progress_bar.visibility = if(show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show error
+     */
+    private fun showError(show: Boolean) {
+        dialogView.exchange_dialog_cryptocurrencies_error.visibility = if(show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Show empty
+     */
+    private fun showEmpty(show: Boolean) {
+        dialogView.exchange_dialog_empty_cryptocurrencies.visibility = if(show) View.VISIBLE else View.GONE
+    }
+
+    /**
+     * Validate user selection
+     */
     private fun validate(): Boolean {
         // Check if user select any elements of the list
         return dialogCryptocurrencyAdapter.selectedCryptocurrencyLisViewDto != null
     }
 
+    /**
+     * A message is displayed to the user informing him/her to select a cryptocurrency.
+     */
     private fun showInvalidateRequest() {
-        val toast =
-            Toast.makeText(context, "No se ha seleccionado ningún elemento", Toast.LENGTH_LONG)
-        toast.show()
+        Toast.makeText(context, resources.getString(R.string.item_no_selected), Toast.LENGTH_LONG)
+            .show()
     }
 
     companion object {

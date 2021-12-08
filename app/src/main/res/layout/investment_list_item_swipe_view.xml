@@ -78,14 +78,12 @@
             android:textSize="14sp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
-            android:text="Bitcoin"/>
+            android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/investment_iv_swipe_cryptocurrency_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.5"
             android:fontFamily="@font/roboto_regular"
             android:textSize="10sp"
             android:layout_marginLeft="20dp"
@@ -97,7 +95,6 @@
             android:id="@+id/investment_iv_swipe_cryptocurrency_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BTC"
             android:fontFamily="@font/roboto_regular"
             android:textSize="10sp"
             android:layout_marginLeft="5dp"
@@ -110,7 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="22.150,00€"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
             android:fontFamily="@font/roboto_regular"

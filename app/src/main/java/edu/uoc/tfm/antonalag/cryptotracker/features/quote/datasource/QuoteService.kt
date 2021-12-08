@@ -24,8 +24,7 @@ class QuoteService(
                 Quote(Constants.DEFAULT_AUTHOR, Constants.DEFAULT_PHRASE)
             } else {
                 /**
-                 * DISCLAIMER: Implement deserialization on this way because response format:
-                 *
+                 * DISCLAIMER: Implement deserialization on this way because response format: double quotes and double slashes
                  */
                 val element = response.replace("\\", "")
                 val jsonObject = JSONObject(
@@ -37,15 +36,10 @@ class QuoteService(
                 Quote(jsonObject.getString("author"), "\"" + jsonObject.getString("phrase") + "\"")
 
             }
-            return response?.let { Either.Right(quote) } ?: Either.Left(Fail.NotFoundFail)
+            return response?.let { Either.Right(quote) }
         } catch (exception: Throwable) {
-            exception.message?.let { Log.e(TAG, it) }
+            Log.e(TAG, exception.stackTraceToString())
             Either.Left(Fail.ServerFail)
         }
-        /*return requestGETRaw<Quote>(
-            httpClient,
-            Endpoints.phraseUrl,
-            mapOf()
-        )*/
     }
 }

@@ -16,7 +16,7 @@ class ExchangeFiatDialogAdapter(): ListAdapter<Fiat, ExchangeFiatDialogAdapter.E
     exchangeFiatDiffCallback
 ) {
 
-    lateinit var fiatSelected: Fiat
+    var fiatSelected: Fiat? = null
     lateinit var fiatSymbolSelected: String
     var selectedItemView: View? = null
     // Variables that allow only one item selected
@@ -58,6 +58,7 @@ class ExchangeFiatDialogAdapter(): ListAdapter<Fiat, ExchangeFiatDialogAdapter.E
                     }
                     fiatSelected = fiat
                     fiatSymbolSelected = fiat.symbol
+                    selectedItemView = itemView
                     lastItemSelectedPos = position
                 }
             }

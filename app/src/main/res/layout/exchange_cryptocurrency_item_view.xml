@@ -36,15 +36,13 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:text="Bitcoin"/>
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/exchange_item_cryptocurrency_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="BTC"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
             android:fontFamily="@font/roboto_bold"

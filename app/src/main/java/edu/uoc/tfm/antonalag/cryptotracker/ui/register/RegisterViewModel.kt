@@ -1,5 +1,6 @@
 package edu.uoc.tfm.antonalag.cryptotracker.ui.register
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -28,7 +29,11 @@ class RegisterViewModel(
     private val _userPassword: MutableLiveData<UserPassword> = MutableLiveData()
     val userPassword: LiveData<UserPassword> = _userPassword
 
+    /**
+     * Local request to check if exists an user with specific email
+     */
     fun userExists(email: String) {
+        Log.v(TAG,"Request to check if user already exists by email: $email")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.userExistsByEmail(email)
@@ -39,11 +44,18 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Called when userExists function is successful
+     */
     private fun handleUserExists(userExists: Boolean) {
         _userExists.value = userExists
     }
 
+    /**
+     * Local request to create an user
+     */
     fun createUser(user: User) {
+        Log.v(TAG, "Request to create user")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.saveUser(user)
@@ -54,7 +66,11 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Local request to get user
+     */
     private fun getUser(id: Long) {
+        Log.v(TAG, "Request to get an user with id: $id")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.findUserById(id)
@@ -66,12 +82,18 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Called when getUser function is successful
+     */
     private fun handleGetUser(user: User) {
         _user.value = user
     }
 
-
+    /**
+     * Local request to create user preferences
+     */
     fun createUserPreferences(userPreferences: UserPreferences) {
+        Log.v(TAG, "Request to create user preferences")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.savePreferences(userPreferences)
@@ -82,7 +104,11 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Local request to get user preferences
+     */
     private fun getUserPreferences(id: Long) {
+        Log.v(TAG, "Request to get user preferences with id: $id")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.findPreferencesById(id)
@@ -93,11 +119,18 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Called when getUserPreferences function is successful
+     */
     private fun handleUserPreferences(userPreferences: UserPreferences) {
         _userPreferences.value = userPreferences
     }
 
+    /**
+     * Local request to create user password
+     */
     fun createUserPassword(password: UserPassword) {
+        Log.v(TAG, "Request to create user password")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.savePassword(password)
@@ -108,7 +141,11 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Local request to get user password
+     */
     private fun getUserPassword(id: Long) {
+        Log.v(TAG, "Request to get user password with id: $id")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.findPasswordById(id)
@@ -119,6 +156,9 @@ class RegisterViewModel(
         }
     }
 
+    /**
+     * Called when getUserPassword function is successful
+     */
     private fun handleGetUserPassword(userPassword: UserPassword) {
         _userPassword.value = userPassword
     }

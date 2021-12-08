@@ -26,6 +26,9 @@ class NewsViewModel(
     private val _localCryptocurrencies: MutableLiveData<List<LocalCryptocurrency>> = MutableLiveData()
     val localCryptocurrencies: LiveData<List<LocalCryptocurrency>> = _localCryptocurrencies
 
+    /**
+     * External API request to get news
+     */
     fun getNews(filters: Map<String, String>, next: String?) {
         Log.v(TAG, "Request news")
         viewModelScope.launch {
@@ -38,11 +41,18 @@ class NewsViewModel(
         }
     }
 
+    /**
+     * Called when getNews function is successful
+     */
     private fun handleNews(news: NewsListViewDto) {
         _news.value = news
     }
 
+    /**
+     * Local request to get local cryptocurrencies
+     */
     fun getCryptocurrencies(userId: Long) {
+        Log.v(TAG, "Request local cryptocurrencies data for user id: $userId")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 cryptocurrencyRepository.findAllByUserId(userId)
@@ -53,6 +63,9 @@ class NewsViewModel(
         }
     }
 
+    /**
+     * Called when getCryptocurrencies function is successful
+     */
     private fun handleCryptocurrencies(list: List<LocalCryptocurrency>) {
         _localCryptocurrencies.value = list
     }

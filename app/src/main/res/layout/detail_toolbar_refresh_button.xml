@@ -50,7 +50,7 @@
                 android:textColor="@color/primary_accent_color"
                 android:layout_centerInParent="true"
                 android:textSize="22dp"
-                android:text="CRYPTO TRACKER"/>
+                android:text="@string/crypto_tracker"/>
 
             <LinearLayout
                 android:id="@+id/menu_refresh_button"

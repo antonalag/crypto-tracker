@@ -6,6 +6,9 @@ import edu.uoc.tfm.antonalag.cryptotracker.features.fiat.model.Fiat
 
 interface FiatRepository {
 
+    /**
+     * Get all fiats
+     */
     suspend fun findAll(): Either<Fail, List<Fiat>>
 
 }

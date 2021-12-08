@@ -14,6 +14,9 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.*
 
+/**
+ * Class that allows to create a httpClient to make requests
+ */
 object Network {
 
     private const val TAG = "Network"

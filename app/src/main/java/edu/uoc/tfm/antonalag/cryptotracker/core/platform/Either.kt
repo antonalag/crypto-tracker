@@ -29,7 +29,6 @@ sealed class Either<out L, out R> {
         }
 }
 
-
 // Returns the value from this `Right` or the given argument if this is a `Left`.
 fun <L, R> Either<L, R>.getOrElse(value: R): R =
     when (this) {

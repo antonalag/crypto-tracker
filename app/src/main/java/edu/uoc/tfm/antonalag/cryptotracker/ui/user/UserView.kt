@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -18,10 +19,14 @@ import edu.uoc.tfm.antonalag.cryptotracker.ui.login.LoginView
 import edu.uoc.tfm.antonalag.cryptotracker.ui.userpreferences.UserPreferencesView
 import edu.uoc.tfm.antonalag.cryptotracker.ui.util.BaseActivity
 import edu.uoc.tfm.antonalag.cryptotracker.ui.util.MenuFragment
+import kotlinx.android.synthetic.main.activity_register_view.*
 import kotlinx.android.synthetic.main.activity_user_view.*
 import kotlinx.android.synthetic.main.main_toolbar.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * Class responsible to handle user information
+ */
 class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccountDialogListener {
 
     private val TAG = "UserView"
@@ -42,6 +47,9 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         initRequests()
     }
 
+    /**
+     * Initializes the properties of the UI elements
+     */
     private fun initUI() {
         // Set toolbar title
         main_toolbar_title.text = resources.getString(R.string.app_name)
@@ -70,7 +78,7 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
             val errorCode = validate()
             if(errorCode == 0) {
                 // Check if user
-                showLoading(true)
+                showView(user_progress_bar, true)
                 // Check if the email exists in database
                 if(globalUser.email != email_edit_text.text.toString()) {
                     viewModel.userExists(email_edit_text.text.toString())
@@ -81,7 +89,7 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         }
         // Set log out button listener
         log_out_button.setOnClickListener {
-            showLoading(true)
+            showView(user_progress_bar, true)
             viewModel.logout()
         }
         // Set delete account button listener
@@ -92,6 +100,9 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         initRequests()
     }
 
+    /**
+     * Configure the CryptocurrencyStatisticsViewModel's observers
+     */
     private fun initViewModelObservers() {
         with(viewModel) {
             observe(userExists, ::handleUserExistsSuccess)
@@ -124,11 +135,17 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         }
     }
 
+    /**
+     * Initializes the necessary requests
+     */
     private fun initRequests() {
         // get user password
         viewModel.getPassword(globalUser.id)
     }
 
+    /**
+     * Show fields in view mode
+     */
     private fun showViewModeFields() {
         // Show view mode fields and buttons and set data
         name_text_view.text = globalUser.name
@@ -149,6 +166,9 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         cancel_button.visibility = View.GONE
     }
 
+    /**
+     * Show fields in edit mode
+     */
     private fun showEditModeFields() {
         // Show edit mode fields and buttons and set data
         name_edit_text.setText(globalUser.name)
@@ -169,6 +189,9 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         delete_account_button.visibility = View.GONE
     }
 
+    /**
+     * Validate data
+     */
     private fun validate(): Int {
         var error = 0
         val allFieldsFilled = !TextUtils.isEmpty(name_edit_text.text.toString())
@@ -181,26 +204,39 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
         val arePasswordsTheSame = password_edit_text.text.toString() == confirm_password_edit_text.text.toString()
         if(!arePasswordsTheSame)
             return R.string. different_passwords
+        // Check if email has a valid format
+        if (!Patterns.EMAIL_ADDRESS.matcher(email_edit_text.text.toString()).matches())
+            return R.string.invalid_email_format
         return error
     }
 
+    /**
+     * It's called when the request for user password information is successful
+     */
     private fun handleUserPasswordSuccess(userPassword: UserPassword) {
-        showLoading(false)
+        showView(user_progress_bar, false)
         this.userPassword = userPassword
     }
 
+    /**
+     * It's called when the request if user exists is successful
+     */
     private fun handleUserExistsSuccess(userExists: Boolean) {
         if(userExists) {
             // Hide loading
-            showLoading(false)
+            showView(user_progress_bar, false)
             // Show message to the user
             Toast.makeText(applicationContext, R.string.user_already_exists, Toast.LENGTH_SHORT)
                 .show()
         } else {
+            // Update user
             saveUser()
         }
     }
 
+    /**
+     * It's called when the request to update user is successful
+     */
     private fun handleIsUserUpdateSuccess(isUserUpdated: Boolean) {
         if(isUserUpdated) {
             // Update global entity user
@@ -209,58 +245,82 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
             // Update password
             savePassword()
         } else {
-            Log.v(TAG, "User hasn't been updated correctly")
+            Log.v(TAG, resources.getString(R.string.user_update_request_failed))
             handleUpdateUserFail(Fail.LocalFail)
         }
     }
 
+    /**
+     * It's called when the request to update user password is successful
+     */
     private fun handleIsPasswordUpdateSuccess(isPasswordUpdated: Boolean) {
         if(isPasswordUpdated) {
+            // Show data in view mode
             showViewModeFields()
-            showLoading(false)
+            showView(user_progress_bar, false)
         } else {
-            Log.v(TAG, "User password hasn't been updated correctly")
+            Log.v(TAG, resources.getString(R.string.user_password_request_failed))
             handleUpdateUserFail(Fail.LocalFail)
         }
     }
 
+    /**
+     * It's called when the request to logout is successful
+     */
     private fun handleLoggedOutSuccess(isLoggedOut: Boolean) {
         if(isLoggedOut) {
-            Log.v(TAG, "User logged our correctly")
-            showLoading(false)
+            Log.v(TAG, resources.getString(R.string.logout_successful))
+            showView(user_progress_bar, false)
+            // Star Login view
             startActivity(Intent(this, LoginView::class.java))
         } else {
-            Log.v(TAG, "User hasn't been logged out correctly")
+            Log.v(TAG, resources.getString(R.string.logout_failed))
             handleUpdateUserFail(Fail.LocalFail)
         }
     }
 
+    /**
+     * It's called when the request to delete all data related to an user is successful
+     */
     private fun handleIsAllDeletedSuccess(isAllDeleted: Boolean) {
         if(isAllDeleted) {
-            Log.v(TAG, "Account deleted correctly")
-            showLoading(false)
+            Log.v(TAG, resources.getString(R.string.account_delete_successful))
+            showView(user_progress_bar, false)
+            // Star Login view
             startActivity(Intent(this, LoginView::class.java))
         } else {
-            Log.v(TAG, "Cannot delete account correctly")
+            Log.v(TAG, resources.getString(R.string.account_delete_failed))
             handleUpdateUserFail(Fail.LocalFail)
         }
     }
 
+    /**
+     * It's called when the request to update user has failed
+     */
     private fun handleUpdateUserFail(fail: Fail) {
         when (fail) {
             is Fail.LocalFail -> {
+                Log.e(TAG, resources.getString(R.string.local_error))
                 // Hide loading
-                showLoading(false)
+                showView(user_progress_bar, false)
                 Toast.makeText(applicationContext, R.string.something_wrong, Toast.LENGTH_SHORT)
                     .show()
             }
             else -> {
-                // Nothing to do
+                Log.e(TAG, resources.getString(R.string.unknown_error))
+                // Hide loading
+                showView(user_progress_bar, false)
+                Toast.makeText(applicationContext, R.string.something_wrong, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 
+    /**
+     * Save user
+     */
     private fun saveUser() {
+        // Set the new data entered by the ser
         userWithNewData = User(
             globalUser.id,
             name_edit_text.text.toString(),
@@ -269,47 +329,66 @@ class UserView : BaseActivity(), DeleteUserAccountDialogFragment.DeleteUserAccou
             null,
             null
         )
+        // Update user
         viewModel.updateUser(userWithNewData)
     }
 
+    /**
+     * Save user password
+     */
     private fun savePassword() {
+        // Check if the new password is the same that old password.
         if(userPassword.password == password_edit_text.text.toString()) {
-            Log.v(TAG, "Same password, not change...")
+            // Same password, not update
             showViewModeFields()
-            showLoading(false)
+            showView(user_progress_bar, false)
         } else {
+            // Set new password
             val userPassword = UserPassword(
                 userPassword.id,
                 password_edit_text.text.toString(),
                 globalUser.id
             )
+            // Update password
             viewModel.updatePassword(userPassword)
         }
     }
 
+    /**
+     * Show menu dialog
+     */
     private fun showMenuDialog() {
         if(!menuOptionsDialog.isAdded) {
             menuOptionsDialog.show(supportFragmentManager, "MenuOptionsDialog")
         }
     }
 
-    private fun showLoading(show: Boolean) {
-        user_progress_bar.visibility = if(show) View.VISIBLE else View.GONE
-    }
-
+    /**
+     * Show delete account dialog
+     */
     private fun showDeleteAccountDialog() {
         if(!deleteAccountDialog.isAdded) {
             deleteAccountDialog.show(supportFragmentManager, "DeleteAccountDialog")
         }
     }
 
+    /**
+     * Callback function that detect when the user clicks on DeleteAccountDialog confirm button
+     */
     override fun onDialogConfirmClick(dialog: DialogFragment) {
+        // Close dialog
         deleteAccountDialog.dismiss()
-        showLoading(true)
+        // Show loading
+        showView(user_progress_bar, true)
+        // Delete account
         viewModel.deleteAll(globalUser.id)
     }
 
+    /**
+     * Callback function that detect when the user clicks on DeleteAccountDialog cancel button
+     */
     override fun onDialogCancelClick(dialog: DialogFragment) {
+        // Close dialog
         deleteAccountDialog.dismiss()
     }
 }

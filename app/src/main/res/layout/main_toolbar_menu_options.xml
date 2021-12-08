@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_gravity="center"
-                android:text="Home"
+                android:text="@string/home"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_gravity="center"
-                android:text="News"
+                android:text="@string/news"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_gravity="center"
-                android:text="Conversor"
+                android:text="@string/converter"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -156,7 +156,6 @@
                 android:scaleType="fitXY" />
         </LinearLayout>
 
-        <!-- Convertir en RleativeLayout -->
         <RelativeLayout
             android:id="@+id/user_menu_option"
             android:layout_width="match_parent"
@@ -181,7 +180,6 @@
                     android:id="@+id/name_user_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Antonio Álvarez"
                     android:layout_toRightOf="@id/icon_user_menu"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="20dp"
@@ -190,9 +188,9 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/email_user_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="anjoal.cad@gmail.com"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_toRightOf="@id/icon_user_menu"
                     android:layout_below="@id/name_user_menu"

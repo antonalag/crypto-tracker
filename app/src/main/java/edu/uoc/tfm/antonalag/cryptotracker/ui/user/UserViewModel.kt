@@ -1,5 +1,6 @@
 package edu.uoc.tfm.antonalag.cryptotracker.ui.user
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -43,7 +44,11 @@ class UserViewModel(
     private val _isAllDeleted: MutableLiveData<Boolean> = MutableLiveData()
     val isAllDeleted: LiveData<Boolean> = _isAllDeleted
 
+    /**
+     * Local request to check if exists an user with specific email
+     */
     fun userExists(email: String) {
+        Log.v(TAG,"Request to check if user already exists by email: $email")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.userExistsByEmail(email)
@@ -54,11 +59,18 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Called when userExists function is successful
+     */
     private fun handleUserExists(userExists: Boolean) {
         _userExists.value = userExists
     }
 
+    /**
+     * Local request to update user
+     */
     fun updateUser(user: User) {
+        Log.v(TAG, "Request to update user")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.updateUser(user)
@@ -69,11 +81,18 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Called when updateUser function is successful
+     */
     private fun handleUpdateUser(id: Int) {
         _isUserUpdated.value = id > 0
     }
 
+    /**
+     * Local request to get user password
+     */
     fun getPassword(userId: Long) {
+        Log.v(TAG, "Request to get user password with user id: $userId")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.findPasswordByUserId(userId)
@@ -84,11 +103,18 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Called when getPassword function is successful
+     */
     private fun handleUserPassword(userPassword: UserPassword) {
         _userPassword.value = userPassword
     }
 
+    /**
+     * Local request to update user password
+     */
     fun updatePassword(userPassword: UserPassword) {
+        Log.v(TAG, "Request to update user password")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.updatePassword(userPassword)
@@ -99,11 +125,18 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Called when updatePassword function is successful
+     */
     private fun handleUpdatePassword(id: Int) {
         _isPasswordUpdated.value = id > 0
     }
 
+    /**
+     * Local request to user logout
+     */
     fun logout(){
+        Log.v(TAG, "Request to user logout")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 userRepository.logout()
@@ -114,11 +147,18 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Called when logout function is successful
+     */
     private fun handleLogout(isLoggedOut: Boolean) {
         _isLoggedOut.value = isLoggedOut
     }
 
+    /**
+     * Local request to delete user account
+     */
     fun deleteAll(userId: Long) {
+        Log.v(TAG, "Request to delete user account")
         viewModelScope.launch {
             // Delete all saved news
             withContext(Dispatchers.IO) {
@@ -160,6 +200,9 @@ class UserViewModel(
         }
     }
 
+    /**
+     * Called when deleteAll function is successful
+     */
     private fun handleDeleteAll(isAllDeleted: Boolean) {
         _isAllDeleted.value = isAllDeleted
     }

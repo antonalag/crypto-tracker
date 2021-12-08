@@ -45,6 +45,20 @@ class FiatCurrencyAdapter() : ListAdapter<Fiat, FiatCurrencyAdapter.FiatCurrency
                 .centerCrop()
                 .into(itemView.fiat_image)
 
+            if(fiat.name == fiatSelected) {
+                itemView.fiat_container.background = ContextCompat.getDrawable(
+                    itemView.context,
+                    R.drawable.selected_border_shape
+                )
+                selectedItemView = itemView
+            } else {
+                itemView.fiat_container.background =
+                    ContextCompat.getDrawable(
+                        itemView.context,
+                        R.drawable.background_selected_shape
+                    )
+            }
+
             itemView.setOnClickListener {
                 if(position != lastItemSelectedPos) {
                     itemView.fiat_container.background = ContextCompat.getDrawable(
@@ -61,6 +75,7 @@ class FiatCurrencyAdapter() : ListAdapter<Fiat, FiatCurrencyAdapter.FiatCurrency
                     }
                     fiatSelected = fiat.name
                     fiatSymbolSelected = fiat.symbol
+                    selectedItemView = itemView
                     lastItemSelectedPos = position
                 }
             }

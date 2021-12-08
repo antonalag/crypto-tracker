@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import edu.uoc.tfm.antonalag.cryptotracker.CryptoTrackerApp
 import edu.uoc.tfm.antonalag.cryptotracker.R
 import edu.uoc.tfm.antonalag.cryptotracker.core.platform.roundToString
-import edu.uoc.tfm.antonalag.cryptotracker.core.util.DateXAxisValueFormatter
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.model.CryptocurrencyCardViewDto
 import edu.uoc.tfm.antonalag.cryptotracker.features.cryptocurrency.model.LocalCryptocurrency
 import edu.uoc.tfm.antonalag.cryptotracker.features.user.model.UserPreferences
@@ -172,10 +170,11 @@ class HomeCryptocurrencyAdapter(private val context: Context): ListAdapter<Crypt
 
         val xAxis: XAxis = chart.xAxis
         xAxis.isEnabled = false
-        xAxis.valueFormatter = DateXAxisValueFormatter()
     }
 
-    // Override onAattach method to instantiate HomeCryptocurrencyAdapterClickListener
+    /**
+     * Override onAattach method to instantiate HomeCryptocurrencyAdapterClickListener
+     */
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         // Verify that the host acitivity implements the callback interface

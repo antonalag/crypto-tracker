@@ -26,6 +26,7 @@ class CryptoTrackerApp: Application() {
     }
 
     // Using companion object to return an instance oc CryptoTrackerApp class like static in java
+    // to keep user and user preferences data available in lifecycle application
     companion object {
         @JvmStatic
         lateinit var instance: CryptoTrackerApp

@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.dialog_news.view.*
 import java.io.Serializable
 import java.lang.ClassCastException
 
+/**
+ * Fragment thar shows filters dialog
+ */
 class FilterNewsDialogFragment : DialogFragment() {
 
     private val TAG = "FilterNewsDialogFragment"
@@ -29,6 +32,9 @@ class FilterNewsDialogFragment : DialogFragment() {
     lateinit var localCryptocurrencySelected: LocalCryptocurrency
     var sortValue: String = ""
 
+    /**
+     * Set necessary data
+     */
     private fun setLocalCryptocurrencies() {
         localCryptocurrencies = arguments?.getSerializable("data") as List<LocalCryptocurrency>
     }
@@ -55,11 +61,13 @@ class FilterNewsDialogFragment : DialogFragment() {
             // Pass null as the parent view because its going in the dialog layout
             dialogView = inflater.inflate(R.layout.dialog_news, null)
             builder.setView(dialogView)
+            // Initialize recycler view
             layoutManager = LinearLayoutManager(activity)
             dialogView.cryptocurrency_news_list_recyclerView.layoutManager = layoutManager
             dialogView.cryptocurrency_news_list_recyclerView.adapter = dialogNewsAdapter
             dialogNewsAdapter.submitList(localCryptocurrencies)
 
+            // Set on click listeners
             dialogView.cancel.setOnClickListener {
                 listener.onFilterNewsDialogCancelClick(this)
             }
@@ -74,27 +82,31 @@ class FilterNewsDialogFragment : DialogFragment() {
                 }
             }
 
-
+            // Create
             builder.create()
         } ?: throw IllegalStateException("Acitivty cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the FilterNewsDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the FilterNewsDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface
         try {
-            // Instantiate the InvestmentDialogListener to be able to send events to the host
-            listener = context as FilterNewsDialogFragment.FilterNewsDialogListener
+            // Instantiate the FilterNewsDialogFragment to be able to send events to the host
+            listener = context as FilterNewsDialogListener
         } catch (e: ClassCastException) {
             // The activity does not implement the interface, thrwo exception
-            throw ClassCastException("$context must impement InvestmentDialogListener")
+            throw ClassCastException("$context must impement FilterNewsDialogFragment")
         }
     }
 
+    /**
+     * Validate data to filter news
+     */
     private fun validate(): Boolean {
         return try{
-
             !sortValue.isNullOrEmpty() &&
                     dialogNewsAdapter.selectedCryptocurrency != null
         } catch (e: Throwable) {
@@ -103,15 +115,20 @@ class FilterNewsDialogFragment : DialogFragment() {
         }
     }
 
+    /**
+     * A message is displayed to the user informing him/her to select correctly the data to filter news.
+     */
     private fun showInvalidateRequest() {
-        val toast = Toast.makeText(
+        Toast.makeText(
             context,
             resources.getString(R.string.dialog_news_fragment_error),
             Toast.LENGTH_LONG
-        )
-        toast.show()
+        ).show()
     }
 
+    /**
+     * Establish sort value depending on which radion button clicked
+     */
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             // Is the button now checked?

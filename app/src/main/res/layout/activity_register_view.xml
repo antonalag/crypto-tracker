@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:alpha="0.85"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Bienvenido a"
+            android:text="@string/bienvenido_a"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/cocobike_regular_trial"
-            android:text="CRYPTO TRACKER"
+            android:text="@string/crypto_tracker"
             android:textColor="@color/primary_accent_color"
             android:textSize="24sp" />
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:alpha="0.85"
             android:fontFamily="@font/montserrat_bold"
-            android:text="¡Únete a nosotros!"
+            android:text="@string/unete_a_nosotros"
             android:textColor="@color/white"
             android:layout_margin="20dp"
             android:textSize="20sp"/>
@@ -83,7 +83,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:textSize="14sp"
                 android:textColor="@color/white"
-                android:text="Continuar con Google"
+                android:text="@string/continuar_con_google"
                 android:layout_centerInParent="true"
                 />
 
@@ -110,7 +110,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:textSize="14sp"
                 android:textColor="@color/white"
-                android:text="Continuar con Facebook"
+                android:text="@string/continuar_con_facebook"
                 android:layout_centerInParent="true"
                 />
 
@@ -139,7 +139,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:textSize="14sp"
                 android:textColor="@color/white"
-                android:text="Continuar con Twitter"
+                android:text="@string/continuar_con_twitter"
                 android:layout_centerInParent="true"
                 />
 
@@ -280,7 +280,7 @@
             android:fontFamily="@font/roboto_regular"
             android:textSize="12sp"
             android:textColor="@color/white"
-            android:text="Crear cuenta"
+            android:text="@string/crear_cuenta"
             android:layout_margin="10dp"
             android:layout_centerInParent="true"
             />
@@ -297,7 +297,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="¿Eres miembro?"
+                android:text="@string/eres_miembro"
                 android:textColor="@color/white"
                 android:alpha="0.85"
                 android:gravity="right"

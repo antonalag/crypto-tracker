@@ -7,6 +7,10 @@ import android.view.MotionEvent
 import android.view.View
 import kotlin.math.abs
 
+/**
+ * Class that allows to detect the swipe action on a view and
+ * perform an action according to the swipe target
+ */
 open class OnSwipeTouchListener(val context: Context?): View.OnTouchListener {
 
     private val TAG = "OnSwipeTouchListener"

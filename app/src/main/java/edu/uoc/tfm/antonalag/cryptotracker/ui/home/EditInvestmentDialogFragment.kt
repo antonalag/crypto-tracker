@@ -14,6 +14,9 @@ import java.lang.ClassCastException
 import java.lang.IllegalStateException
 import kotlin.properties.Delegates
 
+/**
+ * Fragment that shows edit investment dialog
+ */
 class EditInvestmentDialogFragment : DialogFragment() {
 
     private lateinit var dialogView: View
@@ -32,6 +35,9 @@ class EditInvestmentDialogFragment : DialogFragment() {
         fun onConfirmEditClick(cryptocurrencyId: Long, purchasedValue: Double)
     }
 
+    /**
+     * Set necessary data passed as arguments
+     */
     private fun setData() {
         cryptocurencyName = arguments?.getString("cryptocurrencyName", "") ?: ""
         purchasedValue = arguments?.getDouble("purchasedValue") ?: 0.0
@@ -63,11 +69,14 @@ class EditInvestmentDialogFragment : DialogFragment() {
                     listener.onConfirmEditClick(cryptocurrencyId, newPurchasedValue)
                 }
             }
+            // Create
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    // Override the Fragment.onAttach() method to instantiate the EditInvestmentDialogListener
+    /**
+     * Override the Fragment.onAttach() method to instantiate the EditInvestmentDialogListener
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         // Verify that the host acitivity implements the callback interface
